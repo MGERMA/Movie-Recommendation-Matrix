@@ -10,6 +10,12 @@
 <servlet-name>LoginServlet</servlet-name>
 <servlet-class>com.mvc.controller.LoginServlet</servlet-class>
 </servlet>
+<servlet>
+<description></description>
+<display-name>AccesBDD</display-name>
+<servlet-name>AccesBDD</servlet-name>
+<servlet-class>com.mvc.controller.AccesBDD</servlet-class>
+</servlet>
 <servlet-mapping>
 <servlet-name>LoginServlet</servlet-name>
 <url-pattern>/LoginServlet</url-pattern>
