@@ -1,13 +1,10 @@
+//RegisterBean.java
 package com.mvc.bean;
-
-public class LoginBean
-{
+public class RegisterBean {
+private String fullName;
+private String email;
 private String userName;
 private String password;
-private int iduser;
-private String nom;
-
-
 public String getUserName() {
 return userName;
 }
@@ -20,16 +17,16 @@ return password;
 public void setPassword(String password) {
 this.password = password;
 }
-public int getIduser() {
-	return iduser;
+public void setFullName(String fullName) {
+this.fullName = fullName;
 }
-public void setIduser(int iduser) {
-	this.iduser = iduser;
+public String getFullName() {
+return fullName;
 }
-public String getNom() {
-	return nom;
+public void setEmail(String email) {
+this.email = email;
 }
-public void setNom(String nom) {
-	this.nom = nom;
+public String getEmail() {
+return email;
 }
 }

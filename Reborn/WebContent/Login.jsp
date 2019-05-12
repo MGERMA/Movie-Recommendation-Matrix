@@ -3,6 +3,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link href="style.css" rel="stylesheet" media="all" type="text/css"> 
+<style>
+body {
+	font-family: 'Andale Mono', monospace;
+	color: white;
+	background: #141414;
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
 <script>
@@ -47,5 +55,6 @@
 			</tr>
 		</table>
 	</form>
+	<div>Pas encore Inscrit ? <a href="Register.jsp">Faites le maintenant !</a></div>
 </body>
 </html>

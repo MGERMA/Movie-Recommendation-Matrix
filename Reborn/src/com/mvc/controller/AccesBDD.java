@@ -23,7 +23,7 @@ public class AccesBDD extends HttpServlet {
 		String op = request.getParameter("op");
 
 
-	/*
+		/*
 		if(op.equals("ajouterpersonne")){
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");
@@ -37,15 +37,25 @@ public class AccesBDD extends HttpServlet {
 
 
 		if(op.equals("lister")){
-				ArrayList<Integer> listid = ListeIdFilms();
-				ArrayList<String> listPochettes = new ArrayList<String>();
-				listPochettes = ListeTitre();
 
-				request.setAttribute("listePochettes", listPochettes);
-				request.getRequestDispatcher("/lister.jsp").forward(request,response);
-			}
+			ArrayList<String> listeTitre = new ArrayList<String>();
+			listeTitre = ListeTitre();
+			request.setAttribute("listeTitre", listeTitre);
+			request.getRequestDispatcher("/lister.jsp").forward(request,response);
+		}
 
 
+		if(op.equals("pochette")){
+			ArrayList<String> ListePochette = new ArrayList<String>();
+			ListePochette = ListePochette();
+			request.setAttribute("ListePochette", ListePochette);
+			request.getRequestDispatcher("/Home.jsp").forward(request,response);
+		}
+
+		ArrayList<Integer> ListeIdFilms = new ArrayList<Integer>();
+		ListeIdFilms = ListeIdFilms();
+		request.setAttribute("ListeIdFilms", ListeIdFilms);
+		request.getRequestDispatcher("/Home.jsp").forward(request,response);
 	}
 
 
@@ -60,10 +70,10 @@ public class AccesBDD extends HttpServlet {
 			ResultSet res = stmt.executeQuery("SELECT * FROM films");
 
 
-		while(res.next()){
+			while(res.next()){
 
-			laListe.add(res.getInt("id"));
-		}
+				laListe.add(res.getInt("id"));
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -71,7 +81,7 @@ public class AccesBDD extends HttpServlet {
 		}
 		return laListe;
 
-}
+	}
 
 
 	public ArrayList<Integer> ListeIdPochette() {
@@ -85,10 +95,10 @@ public class AccesBDD extends HttpServlet {
 			ResultSet res = stmt.executeQuery("SELECT * FROM films");
 
 
-		while(res.next()){
+			while(res.next()){
 
-			laListe.add(res.getInt("id_pochette"));
-		}
+				laListe.add(res.getInt("id_pochette"));
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -96,7 +106,7 @@ public class AccesBDD extends HttpServlet {
 		}
 		return laListe;
 
-}
+	}
 
 
 
@@ -112,10 +122,10 @@ public class AccesBDD extends HttpServlet {
 			ResultSet res = stmt.executeQuery("SELECT * FROM films");
 
 
-		while(res.next()){
+			while(res.next()){
 
-			laListe.add(res.getString("titre"));
-		}
+				laListe.add(res.getString("titre"));
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -123,10 +133,32 @@ public class AccesBDD extends HttpServlet {
 		}
 		return laListe;
 
-}
+	}
 
 
+	public ArrayList<String> ListePochette() {
 
+		ArrayList<String> laListe = new ArrayList<>();
+
+		Connection con = DBConnection.createConnection();
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			ResultSet res = stmt.executeQuery("SELECT * FROM pochette");
+
+
+			while(res.next()){
+
+				laListe.add(res.getString("nom_fichier"));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return laListe;
+
+	}
 
 
 

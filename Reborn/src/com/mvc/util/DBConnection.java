@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 public class DBConnection {
 	public static Connection createConnection()
+	
 	{
 		Connection con = null;
 		String url = "jdbc:mysql://mysql-prflix.alwaysdata.net:3306/prflix_bdd"; //MySQL URL and followed by the database name

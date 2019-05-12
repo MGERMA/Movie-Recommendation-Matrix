@@ -140,7 +140,8 @@ body {
 }
 </style>
 <script>
-  window.console = window.console || function(t) {};
+	window.console = window.console || function(t) {
+	};
 </script>
 <style>
 .ad {
@@ -148,15 +149,20 @@ body {
 }
 </style>
 <script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
+	if (document.location.search.match(/type=embed/gi)) {
+		window.parent.postMessage("resize", "*");
+	}
 </script>
 </head>
 <body>
+
+
+	<%@ page import="java.util.*, com.mvc.controller.*"%>
+
 	<div style="text-align: left" color="w"></div>
+	<%String user = (String) request.getAttribute("nom");%>
 	Bonjour
-	<%=request.getAttribute("userName") %>
+	<%=user%>
 	<!-- Refer to the video to understand how this works -->
 	<div style="text-align: right">
 		<a href="LogoutServlet">Se déconnecter</a>
@@ -182,38 +188,43 @@ body {
 		<table class="listfilm">
 			<tr>
 				<div class="unfilm">
-					<td><img class="pochette" src="pochettes/dumbo.jpg"></td>
-					<td><img class="pochette" src="pochettes/shazam.jpg"></td>
-					<td><img class="pochette" src="pochettes/Chamboultout.jpg">
-					</td>
-					<td><img class="pochette" src="pochettes/captainMarvel.jpg">
-					</td>
+
+					<%
+					Collection<String> nomPochette = (Collection<String>) request.getAttribute("ListePochette");
+					
+					for (String p : nomPochette) {
+							String s = "pochettes/" + p;							
+					%>
+					<td><img class="pochette" src=<%=s%>></td>
+
+					<%
+						}
+					%>
+				
 			</tr>
 			<tr>
-				<td><a href="dumbolike">+1</a> <a href="dumbodislike">-1</a></td>
-				<td>
-				<a href="dumbolike">+1</a>
-				<a href="dumbodislike">-1</a>
-				</td>
-				<td>
-				<a href="dumbolike">+1</a>
-				<a href="dumbodislike">-1</a>
-				
-				</td>
-				<td>
-				<a href="dumbolike">+1</a>
-				<a href="dumbodislike">-1</a>
-				</td>
+				<%
+				String iduser = (request.getAttribute("id")).toString();
+
+				Collection<Integer> ListeIdFilms = (Collection<Integer>) request.getAttribute("ListeIdFilms");	
+				for (Integer i : ListeIdFilms) { 
+					String like = "VoteServ?id_user="+iduser+"&id_film="+Integer.toString(i)+"&note=2";
+					String dislike = "VoteServ?id_user="+iduser+"&id_film="+Integer.toString(i)+"&note=1";
+					
+				%>
+				<td><a href=<%=like%>>+1</a> <a href=<%=dislike%>>-1</a></td>
+				<%
+						}
+					%>
 			</tr>
-			
 
-		
+
+
 		</table>
-		
-<div>
-<a href="AccesBDD?op=lister"> Consulter la liste de films </a>
-</div>
 
+		<div>
+			<a href="AccesBDD?op=lister"> Consulter la liste de films </a>
+		</div>
 </body>
 </html>
 
