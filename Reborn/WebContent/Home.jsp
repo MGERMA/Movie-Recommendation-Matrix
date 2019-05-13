@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="homestyle.css">
 <link rel="shortcut icon" type="image/x-icon"
 	href="https://static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
 <link rel="mask-icon" type=""
@@ -12,147 +13,14 @@
 	color="#111">
 <title>PRFlix</title>
 <style>
-body * {
-	font-family: 'Andale Mono', monospace;
-	color: white
-}
 
-a {
-	text-decoration: none;
-}
 </style>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Gaegu">
-<style>
-body {
-	color: white;
-	background: #141414;
-}
 
-.wrapper {
-	height: 50px;
-	width: 100vw;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	overflow: hidden;
-	margin-bottom: 20px;
-}
 
-.wrapper .disclaimer {
-	bottom: 15px;
-	position: absolute;
-}
-
-.input-group {
-	position: relative;
-}
-
-.input-group .search {
-	height: 25px;
-	width: 25px;
-	background-color: #fff;
-	border: 0;
-	border-radius: 50%;
-	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
-	cursor: pointer;
-	color: #fff;
-	outline: none;
-	padding: 5px;
-	position: relative;
-	transition: all 150ms cubic-bezier(0.2, 0.6, 0.252, 1.2);
-}
-
-.input-group .search ~ .bar {
-	height: 4px;
-	width: 15px;
-	background: #fff;
-	border-radius: 4px;
-	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
-	position: absolute;
-	display: block;
-	opacity: 1;
-	right: -9px;
-	top: 24px;
-	-webkit-transform: rotate(45deg);
-	transform: rotate(45deg);
-	transition: opacity 150ms ease;
-}
-
-.input-group .search::-webkit-input-placeholder {
-	color: #fff;
-}
-
-.input-group .search:-ms-input-placeholder {
-	color: #fff;
-}
-
-.input-group .search::-ms-input-placeholder {
-	color: #fff;
-}
-
-.pochette {
-	height: 200px;
-	width: auto;
-}
-
-.listfilm {
-	align-items: center;
-	table-layout: fixed;
-}
-
-.input-group .search::placeholder {
-	color: #fff;
-}
-
-.input-group .search:focus {
-	height: 25px;
-	width: 300px;
-	text-align: center;
-	border-radius: 3px;
-	color: #26547c;
-	cursor: initial;
-}
-
-.input-group .search:focus::-webkit-input-placeholder {
-	color: #a1a1a1;
-}
-
-.input-group .search:focus:-ms-input-placeholder {
-	color: #a1a1a1;
-}
-
-.input-group .search:focus::-ms-input-placeholder {
-	color: #a1a1a1;
-}
-
-.input-group .search:focus::placeholder {
-	color: #a1a1a1;
-}
-
-.input-group .search:focus ~ .bar {
-	box-shadow: none;
-	opacity: 0;
-	right: 0;
-	top: 5px;
-}
-</style>
-<script>
-	window.console = window.console || function(t) {
-	};
-</script>
-<style>
-.ad {
-	display: none !important;
-}
-</style>
-<script>
-	if (document.location.search.match(/type=embed/gi)) {
-		window.parent.postMessage("resize", "*");
-	}
-</script>
 </head>
 <body>
 
@@ -184,24 +52,35 @@ body {
 	<div>
 
 		Que pensez vous des films suivants :
-
-		<table class="listfilm">
-			<tr>
-				<div class="unfilm">
-
+				<div class="bande_synopsis">
+					<span id="titre_film">
+						 titre.
+					</span>
+					<p class="texte_synopsis">
+						<span id="texte"> bla </span>	
+					</p>				
+				</div>
+				<div class="container_pochettes">
 					<%
 					Collection<String> nomPochette = (Collection<String>) request.getAttribute("ListePochette");
 					
 					for (String p : nomPochette) {
 							String s = "pochettes/" + p;							
 					%>
-					<td><img class="pochette" src=<%=s%>></td>
+
+					<div class="boite_pochette">
+						<div class="pochette">
+								<img src=<%=s%>>
+						</div>
+					</div>
 
 					<%
 						}
 					%>
+				</div>
 				
-			</tr>
+	<!--				
+		<table>	
 			<tr>
 				<%
 				String iduser = (request.getAttribute("id")).toString();
@@ -218,13 +97,14 @@ body {
 					%>
 			</tr>
 
-
+	  -->
 
 		</table>
 
 		<div>
 			<a href="AccesBDD?op=lister"> Consulter la liste de films </a>
 		</div>
+		<script src="homedynamics.js"></script>
 </body>
 </html>
 

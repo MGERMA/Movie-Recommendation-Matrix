@@ -1,0 +1,77 @@
+// Variables
+$black: #000
+$white: #fff
+$blue: #26547c
+$green: #06d6a0
+$light-gray: #a1a1a1
+
+// Mixins
+=size($h, $w)
+	height: $h
+	width: $w
+
+=flex-center
+	display: flex
+	align-items: center
+	justify-content: center
+
+=gradient($deg, $fc, $sc)
+	background: linear-gradient($deg, $fc 0%, $sc 100%)
+
+// Style
+.wrapper
+	+gradient(45deg, $blue, $green)
+	+size(100vh, 100vw)
+	+flex-center
+	overflow: hidden
+
+	.disclaimer
+		bottom: 15px
+		position: absolute
+
+.input-group
+	position: relative
+
+	.search
+		+size(15px, 15px)
+		background-color: $white
+		border: 0
+		border-radius: 50%
+		box-shadow: 0 2px 2px 0 rgba(0,0,0,0.15)
+		cursor: pointer
+		color: $white
+		outline: none
+		padding: 5px
+		position: relative
+		transition: all 150ms cubic-bezier(0.2, 0.6, 0.252, 1.2)
+
+		~ .bar
+			+size(4px, 15px)
+			background: $white
+			border-radius: 4px
+			box-shadow: 0 2px 2px 0 rgba(0,0,0,0.15)
+			position: absolute
+			display: block
+			opacity: 1
+			right: -9px
+			top: 24px
+			transform: rotate(45deg)
+			transition: opacity 150ms ease
+		
+		&::placeholder
+			color: $white
+	
+		&:focus
+			+size(25px, 200px)
+			border-radius: 3px
+			color: $blue
+			cursor: initial
+	
+			&::placeholder
+				color: $light-gray
+	
+			~ .bar
+				box-shadow: none
+				opacity: 0
+				right: 0
+				top: 5px
