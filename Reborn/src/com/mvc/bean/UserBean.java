@@ -1,11 +1,12 @@
 package com.mvc.bean;
 
-public class LoginBean
-{
-	private String userName;
-	private String password;
+public class UserBean {
+
+
 	private int iduser;
 	private String nom;
+	private String userName;
+
 
 
 	public String getUserName() {
@@ -14,12 +15,8 @@ public class LoginBean
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
+
 	public int getIduser() {
 		return iduser;
 	}
@@ -32,4 +29,5 @@ public class LoginBean
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
 }

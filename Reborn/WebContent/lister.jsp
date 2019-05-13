@@ -12,11 +12,13 @@
 
 
 
+	
 	<%@ page import="java.util.*, com.mvc.controller.*"%>
+	<%@ page import="java.util.*, com.mvc.bean.*"%>
 
 	<%
-		Collection<String> nomPochette = (Collection<String>) request.getAttribute("listeTitre");
-		for (String p : nomPochette) {
+		FilmBean filmBean = (FilmBean) session.getAttribute("film");
+		for (String p : filmBean.getListeFilm()) {
 			String s = p;
 	%>
 
@@ -25,7 +27,7 @@
 
 
 	<%
-		}
+		};
 	%>
 
 	<p>

@@ -13,7 +13,6 @@
 	color="#111">
 <title>PRFlix</title>
 <style>
-
 </style>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -25,12 +24,21 @@
 <body>
 
 
-	<%@ page import="java.util.*, com.mvc.controller.*"%>
+	<%@ page import="java.util.*, com.mvc.controller.*, com.mvc.bean.*"%>
+
+
+	<%
+		FilmBean filmBean = (FilmBean) session.getAttribute("film");
+		UserBean userBean = (UserBean) session.getAttribute("user");
+		PochetteBean pochetteBean = (PochetteBean) session.getAttribute("pochette");
+	%>
+
 
 	<div style="text-align: left" color="w"></div>
-	<%String user = (String) request.getAttribute("nom");%>
+
 	Bonjour
-	<%=user%>
+	<%=userBean.getNom()%>
+
 	<!-- Refer to the video to understand how this works -->
 	<div style="text-align: right">
 		<a href="LogoutServlet">Se déconnecter</a>
@@ -52,49 +60,46 @@
 	<div>
 
 		Que pensez vous des films suivants :
-				<div class="bande_synopsis">
-					<span id="titre_film">
-						 titre.
+
+		<div class="container_pochettes">
+			<%
+				for (int i : filmBean.getListeIdFilm()) {
+	
+					String s = "pochettes/" + pochetteBean.getListePochette().get(i-1);
+
+			%>
+
+
+			<div class="bande_synopsis">
+				<span id="titre_film"> <%=filmBean.getListeFilm().get(i-1)%>
+				</span>
+				<p class="texte_synopsis">
+					<span id="texte"> <%=filmBean.getListeSynopsis().get(i-1)%>
 					</span>
-					<p class="texte_synopsis">
-						<span id="texte"> bla </span>	
-					</p>				
-				</div>
-				<div class="container_pochettes">
-					<%
-					Collection<String> nomPochette = (Collection<String>) request.getAttribute("ListePochette");
-					
-					for (String p : nomPochette) {
-							String s = "pochettes/" + p;							
-					%>
+				</p>
+			</div>
 
-					<div class="boite_pochette">
-						<div class="pochette">
-								<img src=<%=s%>>
-						</div>
-					</div>
-
-					<%
-						}
-					%>
+			<div class="boite_pochette">
+				<div class="pochette">
+					<img src=<%=s%>>
 				</div>
-				
-	<!--				
+			</div>
+
+			<%
+				}
+			%>
+		</div>
+
+		<!--				
 		<table>	
 			<tr>
-				<%
-				String iduser = (request.getAttribute("id")).toString();
+				<%String iduser = String.valueOf(userBean.getIduser());
 
-				Collection<Integer> ListeIdFilms = (Collection<Integer>) request.getAttribute("ListeIdFilms");	
-				for (Integer i : ListeIdFilms) { 
-					String like = "VoteServ?id_user="+iduser+"&id_film="+Integer.toString(i)+"&note=2";
-					String dislike = "VoteServ?id_user="+iduser+"&id_film="+Integer.toString(i)+"&note=1";
-					
-				%>
+			for (Integer i : filmBean.getListeIdFilm()) {
+				String like = "VoteServ?id_user=" + iduser + "&id_film=" + Integer.toString(i) + "&note=2";
+				String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + Integer.toString(i) + "&note=1";%>
 				<td><a href=<%=like%>>+1</a> <a href=<%=dislike%>>-1</a></td>
-				<%
-						}
-					%>
+				<%}%>
 			</tr>
 
 	  -->
