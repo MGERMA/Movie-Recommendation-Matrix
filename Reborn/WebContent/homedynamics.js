@@ -10,13 +10,15 @@ window.console = window.console || function(t) {
 
 var boites = document.getElementsByClassName("boite_pochette");
 
+
+
 var toggleBande = function() {
     document.querySelector(".bande_synopsis").classList.toggle("bande_synopsis--ouverte");
 };
 
 function changerTexte(e) {
     var texte = document.getElementById("texte");
-    texte.firstChild.nodeValue = e.target.firstElementChild.firstElementChild.getAttribute("src");
+    texte.firstChild.nodeValue = jsListeSynopsis[e.target.firstElementChild.firstElementChild.getNodeValue];
 };
 
 for (var i = 0; i < boites.length; i++) {

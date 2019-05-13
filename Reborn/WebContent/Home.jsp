@@ -27,11 +27,16 @@
 	<%@ page import="java.util.*, com.mvc.controller.*, com.mvc.bean.*"%>
 
 
+
 	<%
 		FilmBean filmBean = (FilmBean) session.getAttribute("film");
 		UserBean userBean = (UserBean) session.getAttribute("user");
 		PochetteBean pochetteBean = (PochetteBean) session.getAttribute("pochette");
 	%>
+
+	<script> 
+	
+	</script>
 
 
 	<div style="text-align: left" color="w"></div>
@@ -60,6 +65,13 @@
 	<div>
 
 		Que pensez vous des films suivants :
+		
+		<div class="bande_synopsis">
+				<span id="titre_film"> </span>
+				<p class="texte_synopsis">
+					<span id="texte"> </span>
+				</p>
+		</div>
 
 		<div class="container_pochettes">
 			<%
@@ -70,18 +82,11 @@
 			%>
 
 
-			<div class="bande_synopsis">
-				<span id="titre_film"> <%=filmBean.getListeFilm().get(i-1)%>
-				</span>
-				<p class="texte_synopsis">
-					<span id="texte"> <%=filmBean.getListeSynopsis().get(i-1)%>
-					</span>
-				</p>
-			</div>
+			
 
 			<div class="boite_pochette">
 				<div class="pochette">
-					<img src=<%=s%>>
+					<img id="poch<%=i%>" src=<%=s%>>
 				</div>
 			</div>
 
@@ -109,7 +114,44 @@
 		<div>
 			<a href="AccesBDD?op=lister"> Consulter la liste de films </a>
 		</div>
-		<script src="homedynamics.js"></script>
+		<script>
+		if (document.location.search.match(/type=embed/gi)) {
+		    window.parent.postMessage("resize", "*");
+		}
+		
+		window.console = window.console || function(t) {
+		};
+		
+		//Apparition/Désapparition bande synopsis 
+		
+		var boites = document.getElementsByClassName("boite_pochette");
+		
+
+		var jsListeSynopsis = new Array();
+		<%
+		for (int j=0; j < filmBean.getListeSynopsis().size() ; j++) {
+		%>
+		jsListeSynopsis[<%= j %>] = new String("<%=filmBean.getListeSynopsis().get(j) %>" );
+		<%}%>
+		
+		
+		
+		var toggleBande = function() {
+		    document.querySelector(".bande_synopsis").classList.toggle("bande_synopsis--ouverte");
+		};
+		
+		function changerTexte(e) {
+		    var texte = document.getElementById("texte");
+		    var idSynop = parseInt(new String(e.target.firstElementChild.firstElementChild.getAttribute("id").substring(4))) - 1;
+		    texte.firstChild.nodeValue = jsListeSynopsis[idSynop];
+		};
+		
+		for (var i = 0; i < boites.length; i++) {
+		    boites[i].addEventListener('mouseenter', toggleBande, false);
+		    boites[i].addEventListener('mouseenter', changerTexte, false);
+		    boites[i].addEventListener('mouseleave', toggleBande, false);
+		}			
+		</script>
 </body>
 </html>
 

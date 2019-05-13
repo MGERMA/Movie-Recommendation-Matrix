@@ -163,6 +163,10 @@ body {
 	flex-wrap: wrap;
 }
 
+#texte {
+	margin: 5px;
+}
+
 .container_pochettes .boite_pochette {
 	position: relative;
 	width: 130px;
@@ -174,6 +178,8 @@ body {
 }
 
 .container_pochettes .boite_pochette .pochette {
+	width: 130px;
+	height: 200px;
 	position: relative;
 	overflow: hidden;
 }
