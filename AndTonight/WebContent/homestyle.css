@@ -1,6 +1,9 @@
+
 body * {
-	font-family: 'Andale Mono', monospace;
-	color: white
+	font-family: 'Fjalla One', serif;
+	font-stretch: ultra-condensed;
+
+	color: white;
 }
 
 a {
@@ -31,6 +34,7 @@ body {
 .input-group {
 	position: relative;
 }
+
 
 .input-group .search {
 	height: 25px;
@@ -117,7 +121,7 @@ body {
 }
 
 .bande_synopsis {
-	z-index: 3;
+	z-index: 30;
 	pointer-events: none;
 	position: fixed;
 	top:0;
@@ -133,14 +137,14 @@ body {
 
 .bande_synopsis--ouverte {
 	right:0;
-	z-index: 2;
+	z-index: 30;
 	opacity: 1;
 }
-#titre_film {
+#container_titre_film {
+	
 	z-index: 1;
 	display: flex;
 	position:relative;
-	text-align: center;
 	padding:auto;
 	height: 70px;
 	width:100%;
@@ -163,17 +167,117 @@ body {
 	flex-wrap: wrap;
 }
 
+#texte {
+	margin: 5px;
+}
+#titre_film {
+	transform: scaleX(1.2);
+	margin:15px;
+}
+
 .container_pochettes .boite_pochette {
 	position: relative;
+	z-index:2;
 	width: 130px;
 	height: 200px;
 	background: #ff0;
 	margin: 7px;
 	box-sizing: border-box;
 	display: inline-block;
+	overflow: hidden;
 }
 
 .container_pochettes .boite_pochette .pochette {
+	z-index:2;
+	width: 130px;
+	height;
+	position: relative;
+	overflow: hidden;
+}
+.container_pochettes .boite_pochette .bande_like_droit .boutons_like {
+	top: 80px;
+	position: absolute;
+	z-index: 20;
+	left: -29px;
+	opacity: 0;
+}
+
+.container_pochettes .boite_pochette .bande_like_gauche .boutons_dislike {
+	top: 85px;
+	position: absolute;
+	z-index: 20;
+	left: 105px;
+	opacity: 0;
+}
+
+.container_pochettes .boite_pochette .bande_like_droit{
+	z-index:25;
+	position: absolute;
+	width: 100px;
+	top:0px;
+	left:130px;
+	height: 200px;
+	opacity:0;
+	background: #000000;
+	box-shadow: -20px 0px 60px black;
+}
+
+.container_pochettes .boite_pochette .bande_like_gauche {
+	z-index:25;
+	position: absolute;
+	top : 0px;
+	width: 100px;
+	left:-100px;
+	opacity:0;
+	height: 200px;
+	background: #000000;
+	box-shadow: 20px 0px 60px black;
+
+}
+
+.container_pochettes .boite_pochette .pochette:first-child>img{height:0px;}
+
+.container_pochettes .boite_pochette .bande_like_droit--ouverte{
+	opacity: 1;
+	transition: right 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+.container_pochettes .boite_pochette .bande_like_gauche--ouverte {
+	opacity: 1;
+	transition: right 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+.container_pochettes .boite_pochette .bande_like_droit--ouverte .boutons_like--ouverts {
+	top: 80px;
+	opacity: 1;
+	position: absolute;
+
+	transition: right 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+.container_pochettes .boite_pochette .bande_like_gauche--ouverte .boutons_dislike--ouverts {
+	z-index: 20;
+	top: 85px;
+	opacity:1;
+	position: absolute;
+
+	transition: left 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+
+#container_image_resume {
+	position: relative;
+	width: 100px;
+	height: 150px;
+	background: #ff0;
+	margin: 7px;
+	box-sizing: border-box;
+	display: inline-block;
+}
+
+#container_image_resume #img_resume {
+	width: 100px;
+	height: 150px;
 	position: relative;
 	overflow: hidden;
 }

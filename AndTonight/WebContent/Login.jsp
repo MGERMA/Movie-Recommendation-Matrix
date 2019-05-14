@@ -33,7 +33,7 @@ body {
 	</div>
 	<br>
 	<form name="form" action="LoginServlet" method="post"
-		onsubmit="return validate()">
+		onsubmit="return validate()" accept-charset="UTF-8">
 		<!-- Do not use table to format fields. As a good practice use CSS -->
 		<table align="center">
 			<tr>
