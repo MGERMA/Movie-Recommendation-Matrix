@@ -28,7 +28,7 @@
 
 
 	<%
-		FilmBean filmBean = (FilmBean) session.getAttribute("film");
+		CatalogueBean filmBean = (CatalogueBean) session.getAttribute("film");
 		UserBean userBean = (UserBean) session.getAttribute("user");
 		PochetteBean pochetteBean = (PochetteBean) session.getAttribute("pochette");
 	%>
@@ -38,8 +38,7 @@
 
 	Bonjour
 	<%=userBean.getNom()%>
-
-
+	<% System.out.println(userBean.getNom()); %>
 	<div style="text-align: right">
 		<a href="LogoutServlet">Se déconnecter</a>
 	</div>
@@ -82,7 +81,7 @@
 
 			<div class="boite_pochette">
 				<div class="pochette">
-					<img src=<%=s%>>
+					<img height="200" src=<%=s%>>
 				</div>
 			</div>
 
@@ -106,7 +105,9 @@
 	  -->
 
 		</table>
-
+		<div>
+			<a href="AjoutFilm.jsp"> Ajouter un film dans la base de données</a>
+		</div>
 		<div>
 			<a href="AccesBDD?op=lister"> Consulter la liste de films </a>
 		</div>

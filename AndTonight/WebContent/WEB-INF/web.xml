@@ -28,6 +28,12 @@
 </servlet>
 <servlet>
 <description></description>
+<display-name>AjoutFilmServlet</display-name>
+<servlet-name>AjoutFilmServlet</servlet-name>
+<servlet-class>com.mvc.controller.AjoutFilmServlet</servlet-class>
+</servlet>
+<servlet>
+<description></description>
 <display-name>RegisterServlet</display-name>
 <servlet-name>RegisterServlet</servlet-name>
 <servlet-class>com.mvc.controller.RegisterServlet</servlet-class>

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mvc.bean.FilmBean;
+import com.mvc.bean.CatalogueBean;
 import com.mvc.bean.LoginBean;
 import com.mvc.bean.PochetteBean;
 import com.mvc.bean.UserBean;
@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 			
 			
 			// Concernant les films
-			FilmBean filmBean = new FilmBean();
+			CatalogueBean filmBean = new CatalogueBean();
 			filmBean.setListeFilm(ListeFilms());
 			filmBean.setListeIdFilm(ListeIdFilms());
 			filmBean.setListeSynopsis(ListeSynopsis());

@@ -17,7 +17,7 @@
 	<%@ page import="java.util.*, com.mvc.bean.*"%>
 
 	<%
-		FilmBean filmBean = (FilmBean) session.getAttribute("film");
+	CatalogueBean filmBean = (CatalogueBean) session.getAttribute("film");
 		for (String p : filmBean.getListeFilm()) {
 			String s = p;
 	%>
