@@ -46,30 +46,13 @@ public class LoginServlet extends HttpServlet {
 			userBean.setUserName(loginBean.getUserName());
 			
 			
-			// Concernant les films
-			CatalogueBean filmBean = new CatalogueBean();
-			filmBean.setListeFilm(ListeFilms());
-			filmBean.setListeIdFilm(ListeIdFilms());
-			filmBean.setListeSynopsis(ListeSynopsis());
-			
-			PochetteBean pochetteBean = new PochetteBean();
-			pochetteBean.setListePochette(ListePochette());
-			
-			
 			
 			// Création de la session
 			HttpSession session = request.getSession();
-
 			session.setAttribute( "user", userBean );
-			session.setAttribute( "film", filmBean );
-			session.setAttribute( "pochette", pochetteBean );
+
 			
-		
-			request.setAttribute("ListePochette", ListePochette());
-			request.setAttribute("ListeIdFilms", ListeIdFilms());
-			request.setAttribute("id",loginBean.getIduser());
-			
-			request.getRequestDispatcher("/Home.jsp").forward(request, response);
+			request.getRequestDispatcher("/ChargementServlet?op=Home").forward(request, response);
 		}
 		else
 		{
@@ -79,103 +62,5 @@ public class LoginServlet extends HttpServlet {
 	
 	}
 	
-	public ArrayList<String> ListePochette() {
-
-		ArrayList<String> laListe = new ArrayList<>();
-
-		Connection con = DBConnection.createConnection();
-		Statement stmt;
-		try {
-			stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM pochette");
-
-
-			while(res.next()){
-
-				laListe.add(res.getString("nom_fichier"));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return laListe;
-	}
-	
-	
-	public ArrayList<Integer> ListeIdFilms() {
-
-		ArrayList<Integer> laListe = new ArrayList<>();
-
-		Connection con = DBConnection.createConnection();
-		Statement stmt;
-		try {
-			stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM films");
-
-
-			while(res.next()){
-
-				laListe.add(res.getInt("id"));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return laListe;
-
-	}
-	
-	
-	public ArrayList<String> ListeFilms() {
-
-		ArrayList<String> laListe = new ArrayList<>();
-
-		Connection con = DBConnection.createConnection();
-		Statement stmt;
-		try {
-			stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM films");
-
-
-			while(res.next()){;
-
-				laListe.add(res.getString("titre"));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return laListe;
-
-	}
-	
-	
-	
-	public ArrayList<String> ListeSynopsis() {
-
-		ArrayList<String> laListe = new ArrayList<>();
-
-		Connection con = DBConnection.createConnection();
-		Statement stmt;
-		try {
-			stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM films");
-
-
-			while(res.next()){
-
-				laListe.add(res.getString("synopsis"));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return laListe;
-
-	}
 
 }

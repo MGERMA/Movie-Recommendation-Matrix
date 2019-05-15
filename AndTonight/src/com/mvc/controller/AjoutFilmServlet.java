@@ -18,16 +18,16 @@ public class AjoutFilmServlet extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Here username and password are the names which I have given in the input box in Login.jsp page. Here I am retrieving the values entered by the user and keeping in instance variables for further use.
+		
 		String nomFilm= request.getParameter("nomFilm");
 		Integer idFilm;
 		String synopsis= request.getParameter("Synopsis");
 		Integer idPochette;
 		String nomPochette= request.getParameter("nomPochette");
 		String validation = "Le film a été ajouté";
-		AjoutFilmDao AjoutFilm = new AjoutFilmDao(); //creating object for VoteDao. This class contains main logic of the application.
-		AjoutFilm.AjoutFilm(nomFilm, synopsis, nomPochette);//Calling VoteFilm function
-		request.setAttribute("validation", validation); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
-		request.getRequestDispatcher("/Home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
+		AjoutFilmDao AjoutFilm = new AjoutFilmDao(); 
+		AjoutFilm.AjoutFilm(nomFilm, synopsis, nomPochette);
+		request.setAttribute("validation", validation);  
+		request.getRequestDispatcher("/ChargementServlet?op=Home").forward(request, response);
 	}
 }

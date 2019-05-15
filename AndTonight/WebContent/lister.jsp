@@ -18,6 +18,10 @@
 
 	<%
 	CatalogueBean filmBean = (CatalogueBean) session.getAttribute("film");
+	
+	if (filmBean == null){
+		filmBean = new CatalogueBean();
+	}
 		for (String p : filmBean.getListeFilm()) {
 			String s = p;
 	%>
@@ -31,8 +35,8 @@
 	%>
 
 	<p>
-	<form action="Home.jsp" name="Home">
-		<input type="submit" name="ok" value="Home">
+	<form action="/AndTonight/ChargementServlet" name="Home">
+		<input type="submit" name="op" value="Home">
 	</form>
 	</p>
 

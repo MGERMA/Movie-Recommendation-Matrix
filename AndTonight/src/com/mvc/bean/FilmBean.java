@@ -7,6 +7,7 @@ public class FilmBean {
 	private Integer IdFilm;
 	private String Synopsis;
 	private Integer IdPochette;
+	
 	public String getNomFilm() {
 		return NomFilm;
 	}

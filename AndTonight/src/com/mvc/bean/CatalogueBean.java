@@ -8,6 +8,14 @@ public class CatalogueBean {
 	private ArrayList<Integer> ListeIdFilm;
 	private ArrayList<String> ListeSynopsis;
 	private ArrayList<Integer> ListeIdPochette;
+	
+	
+	public CatalogueBean(){
+		this.ListeFilm = new ArrayList<String>();
+		this.ListeIdFilm = new ArrayList<Integer>();
+		this.ListeSynopsis = new ArrayList<String>();
+		this.ListeIdPochette = new ArrayList<Integer>();
+	}
 
 	public ArrayList<String> getListeFilm() {
 		return ListeFilm;

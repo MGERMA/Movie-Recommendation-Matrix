@@ -8,7 +8,7 @@ public class UserBean {
 	private String userName;
 
 
-
+	
 	public String getUserName() {
 		return userName;
 	}

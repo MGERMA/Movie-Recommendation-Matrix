@@ -55,6 +55,6 @@ body {
 			</tr>
 		</table>
 	</form>
-	<div>Pas encore Inscrit ? <a href="Register.jsp">Faites le maintenant !</a></div>
+	<div>Pas encore inscrit ? <a href="Register.jsp">Faites le maintenant !</a></div>
 </body>
 </html>
