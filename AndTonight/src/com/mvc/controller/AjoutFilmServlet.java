@@ -28,6 +28,6 @@ public class AjoutFilmServlet extends HttpServlet {
 		AjoutFilmDao AjoutFilm = new AjoutFilmDao(); 
 		AjoutFilm.AjoutFilm(nomFilm, synopsis, nomPochette);
 		request.setAttribute("validation", validation);  
-		request.getRequestDispatcher("/ChargementServlet?op=Home").forward(request, response);
+		request.getRequestDispatcher("AjoutFilm.jsp").forward(request, response);
 	}
 }

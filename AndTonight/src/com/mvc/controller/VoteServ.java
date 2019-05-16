@@ -16,14 +16,16 @@ public class VoteServ extends HttpServlet {
 	}
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Here username and password are the names which I have given in the input box in Login.jsp page. Here I am retrieving the values entered by the user and keeping in instance variables for further use.
+		
 		String userID = request.getParameter("id_user");
 		String filmID = request.getParameter("id_film");
 		String note = request.getParameter("note");
+		String redirect = request.getParameter("redirect");
 		String validation = "votre avis a été pris en compte";
-		VoteDao Vote = new VoteDao(); //creating object for VoteDao. This class contains main logic of the application.
-		Vote.VoteFilm(userID,filmID,note); //Calling VoteFilm function
-		request.setAttribute("validation", validation); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
-		request.getRequestDispatcher("/ChargementServlet?op=Home").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
+		VoteDao Vote = new VoteDao(); 
+
+		Vote.VoteFilm(userID,filmID,note); 
+		request.setAttribute("validation", validation); 
+		request.getRequestDispatcher("/ChargementServlet?op="+redirect).forward(request, response);
 	}
 }

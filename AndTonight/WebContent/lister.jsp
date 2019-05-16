@@ -59,7 +59,7 @@
 				<div class="input-group">
 					<form action="/AndTonight/ChargementServlet?op=rechercher" method="get">
 						<input class="search" type="text"
-							placeholder="Rechercher un film en particulier" name="recherche"
+							placeholder="Rechercher un film en particulier" name="recherche_lister"
 							style="")><span class="bar"></span>
 					</form>
 				</div>
@@ -75,8 +75,8 @@
 					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
-						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2";
-						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1";
+						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=lister";
+						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=lister";
 				%>
 
 

@@ -26,8 +26,10 @@ public class ChargementServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String op = request.getParameter("op");
-		String recherche = request.getParameter("recherche");
-
+		String recherche_home = request.getParameter("recherche_home");
+		String recherche_lister = request.getParameter("recherche_lister");
+		String recherche = null;
+		String redirect = null;
 		ArrayList<String> listFilms = new ArrayList<String>();
 		ArrayList<Integer> listIdFilms = new ArrayList<Integer>();
 		ArrayList<String> listSynopsis = new ArrayList<String>();			
@@ -64,9 +66,15 @@ public class ChargementServlet extends HttpServlet {
 
 
 
-		if (recherche!=null){
+		if (recherche_home!=null){
 			op="rechercher";
-		} 
+			recherche = recherche_home;
+			redirect = "Home";
+		} else if (recherche_lister!=null){
+			op="rechercher";
+			recherche = recherche_lister;
+			redirect = "lister";
+		}
 
 
 
@@ -215,7 +223,7 @@ public class ChargementServlet extends HttpServlet {
 			session.setAttribute( "film", catalogueBean );
 			session.setAttribute( "pochette", pochetteBean );
 
-			request.getRequestDispatcher("/Home.jsp").forward(request, response);
+			request.getRequestDispatcher("/"+redirect+".jsp").forward(request, response);
 
 		}
 
