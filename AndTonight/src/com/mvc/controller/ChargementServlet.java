@@ -101,10 +101,10 @@ public class ChargementServlet extends HttpServlet {
 				int id_film=1;			
 				int nb_film = listFilms.size();
 				
-				while(id_film < nb_film){		
+				while(id_film <= nb_film){		
 					
 					if (res.getInt(String.valueOf(id_film)) == 0){
-						System.out.println(id_film-1);
+		
 						listFilms_NV.add(listFilms.get(id_film-1));
 						listIdFilms_NV.add(listIdFilms.get(id_film-1));
 						listSynopsis_NV.add(listSynopsis.get(id_film-1));

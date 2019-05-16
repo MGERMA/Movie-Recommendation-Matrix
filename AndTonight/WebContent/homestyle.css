@@ -176,7 +176,8 @@ body {
 }
 #titre_film {
 	transform: scaleX(1.2);
-	margin:15px;
+	left: 10%;
+	position: relative;
 }
 
 .container_pochettes .boite_pochette {
@@ -287,17 +288,14 @@ body {
 
 #container_image_resume {
 	position: relative;
-	width: 100px;
-	height: 150px;
+	width: 100%;
 	background: #ff0;
-	margin: 7px;
 	box-sizing: border-box;
 	display: inline-block;
 }
 
 #container_image_resume #img_resume {
-	width: 100px;
-	height: 150px;
+	width: 100%;
 	position: relative;
 	overflow: hidden;
 }
