@@ -24,6 +24,6 @@ public class VoteServ extends HttpServlet {
 		VoteDao Vote = new VoteDao(); //creating object for VoteDao. This class contains main logic of the application.
 		Vote.VoteFilm(userID,filmID,note); //Calling VoteFilm function
 		request.setAttribute("validation", validation); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
-		request.getRequestDispatcher("/Home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
+		request.getRequestDispatcher("/ChargementServlet?op=Home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
 	}
 }

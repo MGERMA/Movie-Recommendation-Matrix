@@ -119,7 +119,7 @@
 				<a href="ChargementServlet?op=Home"> Retour au Home</a>
 			</div>
 		</form>
-		<script>
+			<script>
 
 		
 		
@@ -179,5 +179,3 @@
 		</script>
 </body>
 </html>
-
-
