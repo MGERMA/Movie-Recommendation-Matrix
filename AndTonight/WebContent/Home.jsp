@@ -142,49 +142,82 @@
 		//Apparition/D�sapparition bande synopsis 
 		
 		var boites = document.getElementsByClassName("boite_pochette");
-		
+		var boutons_like = new Array();
+		var container = document.getElementsByClassName("container_pochettes")[0];
 
 		var jsListeSynopsis = new Array();
 		var jsListeTitres = new Array();
 		<%for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {%>
 		jsListeSynopsis[<%=i%>] = new String("les synopsis sont bugués mathis" + <%=i%>); 
-		jsListeTitres[<%=i%>] = new String(<%=filmBean.getListeFilm().get(i)%>
-			);
+		jsListeTitres[<%=i%>] = new String("<%=filmBean.getListeFilm().get(i)%>");
 		<%}%>
-			function toggle(e) {
-				e.target.children[1].classList
-						.toggle("bande_like_gauche--ouverte");
-				e.target.children[2].classList
-						.toggle("bande_like_droit--ouverte");
-				e.target.children[1].children[0].classList
-						.toggle("boutons_dislike--ouverts");
-				e.target.children[2].children[0].classList
-						.toggle("boutons_like--ouverts");
-
-				document.querySelector(".bande_synopsis").classList
-						.toggle("bande_synopsis--ouverte");
-
-			};
-			function changerTexte(e) {
-				var texte = document.getElementById("texte");
-				var titre_film = document.getElementById("titre_film");
-				var image_resume = document
-						.getElementById("container_image_resume");
-				var idTableau = parseInt(new String(
-						e.target.firstElementChild.firstElementChild
-								.getAttribute("id").substring(4))) - 1;
-				texte.firstChild.nodeValue = jsListeSynopsis[idTableau];
-				titre_film.firstChild.nodeValue = jsListeTitres[idTableau];
-				// console.log(e.target.firstElementChild.firstElementChild);
-				image_resume.firstElementChild['src'] = e.target.firstElementChild.firstElementChild
-						.getAttribute("src");
-			};
-
-			for (var i = 0; i < boites.length; i++) {
-				boites[i].addEventListener('mouseenter', toggle, false);
-				boites[i].addEventListener('mouseenter', changerTexte, false);
-				boites[i].addEventListener('mouseleave', toggle, false);
+		function disparaitrePochette(e) {
+			//var i = 0;
+			var child = e.target.parentNode.parentNode.parentNode;
+			/*
+			while( (child = child.previousElementSibling) != null && i<10 ) {
+				i++; // index dans la liste des pochettes
+				console.log( i) 
+				console.log(child);
 			}
+			
+			var container = e.target.parentNode;
+			for (var k=i+1; k<container.children.length; k++) {
+				container.children[k-1] = container.children[k-1];
+			}
+			container.children[container.children.length] = null;
+			*/
+			
+			child.className += "--selectionnee";
+		}
+		
+		function toggleBoutonDislike(e) {
+			e.target.classList.toggle("boutons_dislike--ouverts--select")
+		}
+		function toggleBoutonLike(e) {
+			e.target.classList.toggle("boutons_like--ouverts--select")
+		}
+
+		function toggleBoutons(e) {
+			var bouton_like_pochette = e.target.children[2].children[0];
+			var bouton_dislike_pochette = e.target.children[1].children[0];
+			e.target.children[1].classList.toggle("bande_like_gauche--ouverte");
+			e.target.children[2].classList.toggle("bande_like_droit--ouverte");
+			bouton_dislike_pochette.classList.toggle("boutons_dislike--ouverts");
+			bouton_like_pochette.classList.toggle("boutons_like--ouverts");
+			bouton_dislike_pochette.addEventListener('mouseenter', toggleBoutonDislike, false);
+			bouton_dislike_pochette.addEventListener('mouseleave', toggleBoutonDislike, false);
+			bouton_like_pochette.addEventListener('mouseenter', toggleBoutonLike, false);
+			bouton_like_pochette.addEventListener('mouseleave', toggleBoutonLike, false);
+			bouton_dislike_pochette.addEventListener('click', disparaitrePochette, false); // Bouton dislike
+			bouton_like_pochette.addEventListener('click', disparaitrePochette, false); // Bouton like
+			
+
+		};
+
+		function toggleBande(e) {
+			document.querySelector(".bande_synopsis").classList.toggle("bande_synopsis--ouverte");
+		}
+		function changerTexte(e) {
+		    var texte = document.getElementById("texte");
+			var titre_film = document.getElementById("titre_film");
+			var image_resume = document.getElementById("container_image_resume");
+		    var idTableau= parseInt(new String(e.target.firstElementChild.firstElementChild.getAttribute("id").substring(4)));
+		    texte.firstChild.nodeValue = jsListeSynopsis[idTableau];
+			titre_film.firstChild.nodeValue = jsListeTitres[idTableau];
+			// console.log(e.target.firstElementChild.firstElementChild);
+			image_resume.firstElementChild['src'] = e.target.firstElementChild.firstElementChild.getAttribute("src");
+		};
+		
+
+		for (var i = 0; i < boites.length; i++) {
+		    boites[i].addEventListener('mouseenter', toggleBoutons, false);
+		    boites[i].addEventListener('mouseenter', changerTexte, false);
+		    boites[i].addEventListener('mouseleave', toggleBoutons, false);
+		}	
+		
+		container.addEventListener('mouseenter', toggleBande, false);
+		container.addEventListener('mouseleave', toggleBande, false);
 		</script>
 </body>
 </html>
