@@ -33,8 +33,14 @@ public class RegisterDao {
 			preparedStatement = con.prepareStatement(query3);
 			int i3= preparedStatement.executeUpdate();
 			
+			
+			preparedStatement.close();
+			con.close();
+			
 			if (i1 + i2 + i3 !=0)  
 				return "SUCCESS"; 
+			
+			
 		}
 		catch(SQLException e)
 		{

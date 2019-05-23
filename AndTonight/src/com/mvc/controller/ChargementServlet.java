@@ -18,7 +18,12 @@ import com.mvc.bean.CatalogueBean;
 import com.mvc.bean.FilmBean;
 import com.mvc.bean.PochetteBean;
 import com.mvc.bean.UserBean;
+import com.mvc.dao.ListerFilmDao;
+import com.mvc.dao.ListerFilmNonVuDao;
+import com.mvc.dao.ListerRechercheDao;
+import com.mvc.dao.ListerRecommandationDao;
 import com.mvc.util.DBConnection;
+import com.mvc.util.Recommandation;
 
 public class ChargementServlet extends HttpServlet {
 
@@ -28,44 +33,19 @@ public class ChargementServlet extends HttpServlet {
 		String op = request.getParameter("op");
 		String recherche_home = request.getParameter("recherche_home");
 		String recherche_lister = request.getParameter("recherche_lister");
+		String seuil = request.getParameter("seuil");
 		String recherche = null;
 		String redirect = null;
-		ArrayList<String> listFilms = new ArrayList<String>();
-		ArrayList<Integer> listIdFilms = new ArrayList<Integer>();
-		ArrayList<String> listSynopsis = new ArrayList<String>();			
-		ArrayList<String> listPochette = new ArrayList<String>();
-
-		Connection con = DBConnection.createConnection();
-		
-		ResultSet res;
-
-		try {
-			Statement stmt = con.createStatement();
-			
-			res = stmt.executeQuery("SELECT * FROM films");
-			while(res.next()){;
-			listFilms.add(res.getString("titre"));
-			listIdFilms.add(res.getInt("id"));
-			listSynopsis.add(res.getString("synopsis"));
-			}
 
 
-			res = stmt.executeQuery("SELECT * FROM pochette");
-			while(res.next()){
-				listPochette.add(res.getString("nom_fichier"));
-			}
-			
-			stmt.close();
-			con.close();
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		HttpSession session = request.getSession();
+
+
+		if (seuil != null){
+			op="recommander";
 		}
-
-
-
-
+				
 		if (recherche_home!=null){
 			op="rechercher";
 			recherche = recherche_home;
@@ -79,85 +59,19 @@ public class ChargementServlet extends HttpServlet {
 
 
 		if (op.equals("Home")){
-			// Seulement les films que l'utilisateur n'a pas encore vu 
-			
-			// reccupération de la session
-			HttpSession session = request.getSession();
-			UserBean user = (UserBean) session.getAttribute("user");
-			
-			con = DBConnection.createConnection();
-			Statement stmt;
-						
-			ArrayList<String> listFilms_NV = new ArrayList<String>();
-			ArrayList<Integer> listIdFilms_NV = new ArrayList<Integer>();
-			ArrayList<String> listSynopsis_NV = new ArrayList<String>();			
-			ArrayList<String> listPochette_NV = new ArrayList<String>();
-			
-			try {
-				stmt = con.createStatement();
-				res = stmt.executeQuery("SELECT * from FilmsVu WHERE id_user="+String.valueOf(user.getIduser()));
-				res.next();
-				
-				int id_film=1;			
-				int nb_film = listFilms.size();
-				
-				while(id_film <= nb_film){		
-					
-					if (res.getInt(String.valueOf(id_film)) == 0){
-		
-						listFilms_NV.add(listFilms.get(id_film-1));
-						listIdFilms_NV.add(listIdFilms.get(id_film-1));
-						listSynopsis_NV.add(listSynopsis.get(id_film-1));
-						listPochette_NV.add(listPochette.get(id_film-1));				
-					}
-					
-					id_film ++;
-				}
-				stmt.close();
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-						
-			
-			
-			CatalogueBean catalogueBean = new CatalogueBean();
-			catalogueBean.setListeFilm(listFilms_NV);
-			catalogueBean.setListeIdFilm(listIdFilms_NV);
-			catalogueBean.setListeSynopsis(listSynopsis_NV);
 
-			PochetteBean pochetteBean = new PochetteBean();
-			pochetteBean.setListePochette(listPochette_NV);
 
-			
-			session.setAttribute( "film", catalogueBean );
-			session.setAttribute( "pochette", pochetteBean );
-		
+			ListerFilmNonVuDao liste = new ListerFilmNonVuDao();
+			liste.ListerFilmNonVu(session);
 			request.getRequestDispatcher("/Home.jsp").forward(request, response);
 
 		}
 
 
 		if (op.equals("lister")){
-			// Concernant les films
-			CatalogueBean catalogueBean = new CatalogueBean();
-			catalogueBean.setListeFilm(listFilms);
-			catalogueBean.setListeIdFilm(listIdFilms);
-			catalogueBean.setListeSynopsis(listSynopsis);
 
-			PochetteBean pochetteBean = new PochetteBean();
-			pochetteBean.setListePochette(listPochette);
-
-
-
-			// reccupération de la session
-			HttpSession session = request.getSession();
-
-			session.setAttribute( "film", catalogueBean );
-			session.setAttribute( "pochette", pochetteBean );
-
+			ListerFilmDao liste = new ListerFilmDao();
+			liste.ListerFilm(session);
 			request.getRequestDispatcher("/lister.jsp").forward(request, response);
 
 		}
@@ -165,65 +79,20 @@ public class ChargementServlet extends HttpServlet {
 
 		if (op.equals("rechercher")){
 
-			CatalogueBean catalogueBean = new CatalogueBean();
-			PochetteBean pochetteBean = new PochetteBean();
-
-
-			// Recherche
-
-			ArrayList<String> listFilmsR = new ArrayList<String>();
-			ArrayList<Integer> listIdFilmsR = new ArrayList<Integer>();
-			ArrayList<String> listSynopsisR = new ArrayList<String>();			
-			ArrayList<String> listPochetteR = new ArrayList<String>();
-
-
-
-			if (recherche.length()>0){
-
-
-				for(int i : listIdFilms){
-
-					int id = i-1;
-					String nom = listFilms.get(id);
-
-					if(nom.contains(recherche)){
-
-						listFilmsR.add(nom);
-						listIdFilmsR.add(id);
-						listSynopsisR.add(listSynopsis.get(id));
-						listPochetteR.add(listPochette.get(id));
-
-					}		
-				}
-
-
-				catalogueBean.setListeFilm(listFilmsR);
-				catalogueBean.setListeIdFilm(listIdFilmsR);
-				catalogueBean.setListeSynopsis(listSynopsisR);
-				pochetteBean.setListePochette(listPochetteR);
-
-
-			} else {
-
-				catalogueBean.setListeFilm(listFilms);
-				catalogueBean.setListeIdFilm(listIdFilms);
-				catalogueBean.setListeSynopsis(listSynopsis);			
-				pochetteBean.setListePochette(listPochette);
-
-			}
-
-
-
-
-
-			// reccupération de la session
-
-			HttpSession session = request.getSession();
-
-			session.setAttribute( "film", catalogueBean );
-			session.setAttribute( "pochette", pochetteBean );
-
+			ListerRechercheDao liste = new ListerRechercheDao();
+			liste.ListerFilmRecherche(recherche, session);
 			request.getRequestDispatcher("/"+redirect+".jsp").forward(request, response);
+
+		}
+		
+		
+		if (op.equals("recommander")){
+
+			Recommandation m = new Recommandation();
+			m.RecommandationUser(session,Float.parseFloat(seuil));
+			ListerRecommandationDao liste = new ListerRecommandationDao();
+			liste.ListerRecommandation(session,m.getMesRecommendations(),m.getMesNotes());
+			request.getRequestDispatcher("/recommandation.jsp").forward(request, response);
 
 		}
 

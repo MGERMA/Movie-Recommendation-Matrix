@@ -11,6 +11,7 @@ import org.apache.commons.text.StringEscapeUtils;
 import com.mvc.util.DBConnection;
 
 public class AjoutFilmDao {
+	
 	public void AjoutFilm(String nomFilm, String synopsis, String nompochette)
 	{
 
@@ -24,8 +25,6 @@ public class AjoutFilmDao {
 			con = DBConnection.createConnection(); //establishing connection
 			statement = con.createStatement(); //Statement is used to write queries. Read more about it.
 			// INSERT INTO `films` (`id`, `titre`, `id_pochette`, `synopsis`) VALUES (NULL, 'nomFilm', 'idpochette', 'synopsis')
-
-
 
 			statement.executeUpdate("INSERT INTO `films` (`id`, `titre`, `synopsis`) VALUES (NULL,'"+nomFilm+"','"+StringEscapeUtils.escapeHtml4(synopsis)+"')");
 
@@ -41,8 +40,10 @@ public class AjoutFilmDao {
 			statement.executeUpdate("ALTER TABLE `Notes` ADD `"+idfilm+"` BIT(3) NOT NULL DEFAULT b'0' AFTER `"+(idfilm-1)+"`");
 			statement.executeUpdate("ALTER TABLE `FilmsVu` ADD `"+idfilm+"` BIT(1) NOT NULL DEFAULT b'0' AFTER `"+(idfilm-1)+"`");
 
-
-
+			statement.close();
+			con.close();
+			
+			
 
 
 

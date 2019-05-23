@@ -33,6 +33,9 @@ public class LoginDao {
 					return "SUCCESS";
 				}
 			}
+			
+			statement.close();
+			con.close();
 		}
 		catch(SQLException e)
 		{

@@ -33,6 +33,9 @@ public class VoteDao {
 			statement = con.createStatement(); //Statement is used to write queries. Read more about it.
 			statement.executeUpdate("UPDATE `Notes` SET `" + filmID + "` = " + note + " WHERE `id_user` = " + userID); //Here table name is users and userName,password are columns. fetching all the records and storing in a resultSet.
 			statement.executeUpdate("UPDATE `FilmsVu` SET `" + filmID + "` = 1 WHERE `id_user` = " + userID);
+			
+			statement.close();
+			con.close();
 		}
 		catch(SQLException e)
 		{

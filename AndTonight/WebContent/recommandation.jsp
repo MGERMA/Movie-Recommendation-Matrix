@@ -13,7 +13,7 @@
 	color="#111">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-<title>Catalogue</title>
+<title>Recommandations</title>
 <style>
 </style>
 <link rel="stylesheet"
@@ -33,6 +33,7 @@
 		CatalogueBean filmBean = (CatalogueBean) session.getAttribute("film");
 		UserBean userBean = (UserBean) session.getAttribute("user");
 		PochetteBean pochetteBean = (PochetteBean) session.getAttribute("pochette");
+		ArrayList<Float> notes = (ArrayList<Float>) session.getAttribute("notes");
 
 
 		if (filmBean == null) {
@@ -54,15 +55,16 @@
 
 	<div class="entete">
 		<div style="text-align: center">
-			<h1>Notre Catalogue</h1>
+			<h1>Vos recommandations</h1>
+			<h2>Vous allez prendre un plaisir fou !</h2>
 			<div class="wrapper">
 
 				<div class="input-group">
-					<form action="/AndTonight/ChargementServlet?op=rechercher"
+					<form action="/AndTonight/ChargementServlet?op=recommander"
 						method="get">
 						<input class="search" type="text"
-							placeholder="Rechercher un film en particulier"
-							name="recherche_lister" style="")><span class="bar"></span>
+							placeholder="Entrer le seuil"
+							name="seuil" style="")><span class="bar"></span>
 					</form>
 				</div>
 			</div>
@@ -77,10 +79,7 @@
 					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
-						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2"
-								+ "&redirect=lister";
-						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i)
-								+ "&note=1" + "&redirect=lister";
+				
 				%>
 
 
@@ -89,7 +88,7 @@
 						<span id="titre_film"> </span>
 					</div>
 					<div id=container_image_resume>
-						<img id="img_resume" src=pochettes/captainMarvel.jpg>
+						<img id="img_resume" src=<%=s%>>
 					</div>
 					<p class="texte_synopsis">
 						<span id="texte"> </span>
@@ -99,20 +98,10 @@
 				<div class="boite_pochette">
 					<div class="pochette">
 						<img id="poch<%=i%>" src=<%=s%>>
-					</div>
-
-					<div class="bande_like_gauche">
-						<a href="<%=dislike%>" class="boutons_dislike"> <span
-							class="material-icons"> thumb_down_alt </span>
-						</a>
-					</div>
-					<div class="bande_like_droit">
-						<a href="<%=like%>" class="boutons_like"> <span
-							class="material-icons"> thumb_up_alt </span>
-						</a>
+						
 					</div>
 				</div>
-
+				<%=String.valueOf(notes.get(i))%>
 				<%
 					}
 				%>
@@ -141,10 +130,11 @@
 
 		var jsListeSynopsis = new Array();
 		var jsListeTitres = new Array();
+		var jsListeNotes = new Array();
 		<%for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {%>
 		jsListeSynopsis[<%=i%>] = new String("<%=filmBean.getListeSynopsis().get(i)%>"); 
 		jsListeTitres[<%=i%>] = new String("<%=filmBean.getListeFilm().get(i)%>");
-	
+		jsListeNotes[<%=i%>] = new String("<%=String.valueOf((notes.get(i)))%>");
 		<%}%>
 			function toggleBoutonDislike(e) {
 				e.target.classList.toggle("boutons_dislike--ouverts--select")
@@ -180,6 +170,7 @@
 			}
 			
 			function changerTexte(e) {
+				var note = document.getElementById("note");
 				var texte = document.getElementById("texte");
 				var titre_film = document.getElementById("titre_film");
 				
@@ -191,9 +182,9 @@
 				texte.firstChild.nodeValue = jsListeSynopsis[idTableau];
 				titre_film.firstChild.nodeValue = jsListeTitres[idTableau];
 				
+				
 				// console.log(e.target.firstElementChild.firstElementChild);
-				image_resume.firstElementChild['src'] = e.target.firstElementChild.firstElementChild
-						.getAttribute("src");
+				image_resume.firstElementChild['src'] = e.target.firstElementChild.firstElementChild.getAttribute("src");
 			};
 
 			for (var i = 0; i < boites.length; i++) {

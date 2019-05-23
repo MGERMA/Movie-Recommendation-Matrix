@@ -127,6 +127,10 @@
 				<a href="ChargementServlet?op=lister"> Consulter la liste de
 					films </a>
 			</div>
+			<div>
+				<a href="ChargementServlet?op=recommander&seuil=7"> Mes recommandations
+					 </a>
+			</div>
 		</form>
 		<script>
 
@@ -148,7 +152,7 @@
 		var jsListeSynopsis = new Array();
 		var jsListeTitres = new Array();
 		<%for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {%>
-		jsListeSynopsis[<%=i%>] = new String("les synopsis sont bugués mathis" + <%=i%>); 
+		jsListeSynopsis[<%=i%>] = new String("<%=filmBean.getListeSynopsis().get(i)%>"); 
 		jsListeTitres[<%=i%>] = new String("<%=filmBean.getListeFilm().get(i)%>");
 		<%}%>
 		function disparaitrePochette(e) {
