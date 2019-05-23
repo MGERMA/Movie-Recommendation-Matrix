@@ -128,7 +128,7 @@
 					films </a>
 			</div>
 			<div>
-				<a href="ChargementServlet?op=recommander&seuil=7"> Mes recommandations
+				<a href="ChargementServlet?op=recommander&seuil=5"> Mes recommandations
 					 </a>
 			</div>
 		</form>

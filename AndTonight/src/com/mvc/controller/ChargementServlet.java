@@ -43,6 +43,9 @@ public class ChargementServlet extends HttpServlet {
 
 
 		if (seuil != null){
+			if(seuil.equals("")){
+				seuil = "0";
+			}
 			op="recommander";
 		}
 				
