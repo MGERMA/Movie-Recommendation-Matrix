@@ -74,16 +74,7 @@
 		Que pensez vous des films suivants :
 		<form action="" accept-charset="UTF-8">
 			<div class="container_pochettes">
-				<%
-					int iduser = userBean.getIduser();
-					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
-
-						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
-						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=Home";
-						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=Home";
-				%>
-
-
+				
 				<div class="bande_synopsis">
 					<div id="container_titre_film">
 						<span id="titre_film"> </span>
@@ -95,6 +86,18 @@
 						<span id="texte"> </span>
 					</p>
 				</div>
+				<%
+					int iduser = userBean.getIduser();
+					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
+
+						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
+						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=Home";
+						String vu = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=Home";
+						String favoris = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=Home";
+						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=Home";
+				%>
+
+
 
 				<div class="boite_pochette">
 					<div class="pochette">
@@ -110,6 +113,12 @@
 						<a href="<%=like%>" class="boutons_like"> <span
 							class="material-icons"> thumb_up_alt </span>
 						</a>
+						<a href="<%=favoris%>" class="boutons_favoris"> <span
+							class="material-icons"> favorite </span>
+						</a>
+						<a href="<%=vu%>" class="boutons_check"> <span
+							class="material-icons"> check </span>
+							</a>
 					</div>
 				</div>
 
@@ -118,11 +127,8 @@
 				%>
 			</div>
 
-			
-			<div>
-				<a href="ChargementServlet?op=mesfilms"> Mes films vus
-					 </a>
-			</div>
+
+
 			<div>
 				<a href="AjoutFilm.jsp"> Ajouter un film dans la base de données</a>
 			</div>
@@ -179,26 +185,41 @@
 		}
 		
 		function toggleBoutonDislike(e) {
-			e.target.classList.toggle("boutons_dislike--ouverts--select")
+			e.target.classList.toggle("boutons_dislike--ouverts--select");
 		}
 		function toggleBoutonLike(e) {
-			e.target.classList.toggle("boutons_like--ouverts--select")
+			e.target.classList.toggle("boutons_like--ouverts--select");
+		}
+		function toggleBoutonFavoris(e) {
+			e.target.classList.toggle("boutons_favoris--ouverts--select");
+		}
+		function toggleBoutonCheck(e) {
+			e.target.classList.toggle("boutons_check--ouverts--select");
 		}
 
 		function toggleBoutons(e) {
 			var bouton_like_pochette = e.target.children[2].children[0];
 			var bouton_dislike_pochette = e.target.children[1].children[0];
+			var bouton_favoris_pochette = e.target.children[2].children[1];
+			var bouton_check_pochette = e.target.children[2].children[2];
 			e.target.children[1].classList.toggle("bande_like_gauche--ouverte");
 			e.target.children[2].classList.toggle("bande_like_droit--ouverte");
 			bouton_dislike_pochette.classList.toggle("boutons_dislike--ouverts");
 			bouton_like_pochette.classList.toggle("boutons_like--ouverts");
+			bouton_favoris_pochette.classList.toggle("boutons_favoris--ouverts");
+			bouton_check_pochette.classList.toggle("boutons_check--ouverts");
 			bouton_dislike_pochette.addEventListener('mouseenter', toggleBoutonDislike, false);
 			bouton_dislike_pochette.addEventListener('mouseleave', toggleBoutonDislike, false);
 			bouton_like_pochette.addEventListener('mouseenter', toggleBoutonLike, false);
 			bouton_like_pochette.addEventListener('mouseleave', toggleBoutonLike, false);
+			bouton_favoris_pochette.addEventListener('mouseenter', toggleBoutonFavoris, false);
+			bouton_favoris_pochette.addEventListener('mouseleave', toggleBoutonFavoris, false);
+			bouton_check_pochette.addEventListener('mouseenter', toggleBoutonCheck, false);
+			bouton_check_pochette.addEventListener('mouseleave', toggleBoutonCheck, false);
 			bouton_dislike_pochette.addEventListener('click', disparaitrePochette, false); // Bouton dislike
 			bouton_like_pochette.addEventListener('click', disparaitrePochette, false); // Bouton like
-			
+			bouton_favoris_pochette.addEventListener('click', disparaitrePochette, false);
+			bouton_check_pochette.addEventListener('click', disparaitrePochette, false);
 
 		};
 
@@ -209,6 +230,7 @@
 		    var texte = document.getElementById("texte");
 			var titre_film = document.getElementById("titre_film");
 			var image_resume = document.getElementById("container_image_resume");
+			console.log(e.target.firstElementChild);
 		    var idTableau= parseInt(new String(e.target.firstElementChild.firstElementChild.getAttribute("id").substring(4)));
 		    texte.firstChild.nodeValue = jsListeSynopsis[idTableau];
 			titre_film.firstChild.nodeValue = jsListeTitres[idTableau];

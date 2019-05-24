@@ -1,9 +1,11 @@
 package com.mvc.controller;
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.mvc.bean.RegisterBean;
 import com.mvc.dao.RegisterDao;
 public class RegisterServlet extends HttpServlet {

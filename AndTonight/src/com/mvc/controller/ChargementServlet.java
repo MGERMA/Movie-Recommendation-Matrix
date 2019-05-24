@@ -1,29 +1,18 @@
 package com.mvc.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mvc.bean.CatalogueBean;
-import com.mvc.bean.FilmBean;
-import com.mvc.bean.PochetteBean;
-import com.mvc.bean.UserBean;
 import com.mvc.dao.ListerFilmDao;
 import com.mvc.dao.ListerFilmNonVuDao;
 import com.mvc.dao.ListerMesFilmsDao;
 import com.mvc.dao.ListerRechercheDao;
 import com.mvc.dao.ListerRecommandationDao;
-import com.mvc.util.DBConnection;
 import com.mvc.util.Recommandation;
 
 public class ChargementServlet extends HttpServlet {

@@ -72,17 +72,7 @@
 
 		<form action="" accept-charset="UTF-8">
 			<div class="container_pochettes">
-				<%
-					int iduser = userBean.getIduser();
-					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
-
-						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
-						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2"
-								+ "&redirect=mesfilms";
-						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i)
-								+ "&note=1" + "&redirect=mesfilms";
-				%>
-
+			
 
 				<div class="bande_synopsis">
 					<div id="container_titre_film">
@@ -95,6 +85,19 @@
 						<span id="texte"> </span>
 					</p>
 				</div>
+			
+				<%
+					int iduser = userBean.getIduser();
+					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
+
+						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
+						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=Home";
+						String vu = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=Home";
+						String favoris = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=Home";
+						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=Home";
+				%>
+
+
 
 				<div class="boite_pochette">
 					<div class="pochette">
@@ -110,8 +113,15 @@
 						<a href="<%=like%>" class="boutons_like"> <span
 							class="material-icons"> thumb_up_alt </span>
 						</a>
+						<a href="<%=favoris%>" class="boutons_favoris"> <span
+							class="material-icons"> favorite </span>
+						</a>
+						<a href="<%=vu%>" class="boutons_check"> <span
+							class="material-icons"> check </span>
+							</a>
 					</div>
 				</div>
+
 
 				<%
 					}
@@ -146,64 +156,110 @@
 		jsListeTitres[<%=i%>] = new String("<%=filmBean.getListeFilm().get(i)%>");
 	
 		<%}%>
-			function toggleBoutonDislike(e) {
-				e.target.classList.toggle("boutons_dislike--ouverts--select")
-			}
-			function toggleBoutonLike(e) {
-				e.target.classList.toggle("boutons_like--ouverts--select")
-			}
 
-			function toggleBoutons(e) {
-				var bouton_like_pochette = e.target.children[2].children[0];
-				var bouton_dislike_pochette = e.target.children[1].children[0];
-				e.target.children[1].classList
-						.toggle("bande_like_gauche--ouverte");
-				e.target.children[2].classList
-						.toggle("bande_like_droit--ouverte");
-				bouton_dislike_pochette.classList
-						.toggle("boutons_dislike--ouverts");
-				bouton_like_pochette.classList.toggle("boutons_like--ouverts");
-				bouton_dislike_pochette.addEventListener('mouseenter',
-						toggleBoutonDislike, false);
-				bouton_dislike_pochette.addEventListener('mouseleave',
-						toggleBoutonDislike, false);
-				bouton_like_pochette.addEventListener('mouseenter',
-						toggleBoutonLike, false);
-				bouton_like_pochette.addEventListener('mouseleave',
-						toggleBoutonLike, false);
+		
+		if (document.location.search.match(/type=embed/gi)) {
+		    window.parent.postMessage("resize", "*");
+		}
+		
+		window.console = window.console || function(t) {
+		};
+		
+		//Apparition/D�sapparition bande synopsis 
+		
+		var boites = document.getElementsByClassName("boite_pochette");
+		var boutons_like = new Array();
+		var container = document.getElementsByClassName("container_pochettes")[0];
 
-			};
-
-			function toggleBande(e) {
-				document.querySelector(".bande_synopsis").classList
-						.toggle("bande_synopsis--ouverte");
+		var jsListeSynopsis = new Array();
+		var jsListeTitres = new Array();
+		<%for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {%>
+		jsListeSynopsis[<%=i%>] = new String("<%=filmBean.getListeSynopsis().get(i)%>"); 
+		jsListeTitres[<%=i%>] = new String("<%=filmBean.getListeFilm().get(i)%>");
+		<%}%>
+		function disparaitrePochette(e) {
+			//var i = 0;
+			var child = e.target.parentNode.parentNode.parentNode;
+			/*
+			while( (child = child.previousElementSibling) != null && i<10 ) {
+				i++; // index dans la liste des pochettes
+				console.log( i) 
+				console.log(child);
 			}
 			
-			function changerTexte(e) {
-				var texte = document.getElementById("texte");
-				var titre_film = document.getElementById("titre_film");
-				
-				var image_resume = document
-						.getElementById("container_image_resume");
-				var idTableau = parseInt(new String(
-						e.target.firstElementChild.firstElementChild
-								.getAttribute("id").substring(4)));
-				texte.firstChild.nodeValue = jsListeSynopsis[idTableau];
-				titre_film.firstChild.nodeValue = jsListeTitres[idTableau];
-				
-				// console.log(e.target.firstElementChild.firstElementChild);
-				image_resume.firstElementChild['src'] = e.target.firstElementChild.firstElementChild
-						.getAttribute("src");
-			};
-
-			for (var i = 0; i < boites.length; i++) {
-				boites[i].addEventListener('mouseenter', toggleBoutons, false);
-				boites[i].addEventListener('mouseenter', changerTexte, false);
-				boites[i].addEventListener('mouseleave', toggleBoutons, false);
+			var container = e.target.parentNode;
+			for (var k=i+1; k<container.children.length; k++) {
+				container.children[k-1] = container.children[k-1];
 			}
+			container.children[container.children.length] = null;
+			*/
+			
+			child.className += "--selectionnee";
+		}
+		
+		function toggleBoutonDislike(e) {
+			e.target.classList.toggle("boutons_dislike--ouverts--select")
+		}
+		function toggleBoutonLike(e) {
+			e.target.classList.toggle("boutons_like--ouverts--select")
+		}
+		function toggleBoutonFavoris(e) {
+			e.target.classList.toggle("boutons_favoris--ouverts--select")
+		}
+		function toggleBoutonCheck(e) {
+			e.target.classList.toggle("boutons_check--ouverts--select")
+		}
 
-			container.addEventListener('mouseenter', toggleBande, false);
-			container.addEventListener('mouseleave', toggleBande, false);
+		function toggleBoutons(e) {
+			var bouton_like_pochette = e.target.children[2].children[0];
+			var bouton_dislike_pochette = e.target.children[1].children[0];
+			var bouton_favoris_pochette = e.target.children[2].children[1];
+			var bouton_check_pochette = e.target.children[2].children[2];
+			e.target.children[1].classList.toggle("bande_like_gauche--ouverte");
+			e.target.children[2].classList.toggle("bande_like_droit--ouverte");
+			bouton_dislike_pochette.classList.toggle("boutons_dislike--ouverts");
+			bouton_like_pochette.classList.toggle("boutons_like--ouverts");
+			bouton_favoris_pochette.classList.toggle("boutons_favoris--ouverts");
+			bouton_check_pochette.classList.toggle("boutons_check--ouverts");
+			bouton_dislike_pochette.addEventListener('mouseenter', toggleBoutonDislike, false);
+			bouton_dislike_pochette.addEventListener('mouseleave', toggleBoutonDislike, false);
+			bouton_like_pochette.addEventListener('mouseenter', toggleBoutonLike, false);
+			bouton_like_pochette.addEventListener('mouseleave', toggleBoutonLike, false);
+			bouton_favoris_pochette.addEventListener('mouseenter', toggleBoutonFavoris, false);
+			bouton_favoris_pochette.addEventListener('mouseleave', toggleBoutonFavoris, false);
+			bouton_check_pochette.addEventListener('mouseenter', toggleBoutonCheck, false);
+			bouton_check_pochette.addEventListener('mouseleave', toggleBoutonCheck, false);
+			bouton_dislike_pochette.addEventListener('click', disparaitrePochette, false); // Bouton dislike
+			bouton_like_pochette.addEventListener('click', disparaitrePochette, false); // Bouton like
+			bouton_favoris_pochette.addEventListener('click', disparaitrePochette, false);
+			bouton_check_pochette.addEventListener('click', disparaitrePochette, false);
+
+		};
+
+		function toggleBande(e) {
+			document.querySelector(".bande_synopsis").classList.toggle("bande_synopsis--ouverte");
+		}
+		function changerTexte(e) {
+		    var texte = document.getElementById("texte");
+			var titre_film = document.getElementById("titre_film");
+			var image_resume = document.getElementById("container_image_resume");
+			console.log(e.target.firstElementChild);
+		    var idTableau= parseInt(new String(e.target.firstElementChild.firstElementChild.getAttribute("id").substring(4)));
+		    texte.firstChild.nodeValue = jsListeSynopsis[idTableau];
+			titre_film.firstChild.nodeValue = jsListeTitres[idTableau];
+			// console.log(e.target.firstElementChild.firstElementChild);
+			image_resume.firstElementChild['src'] = e.target.firstElementChild.firstElementChild.getAttribute("src");
+		};
+		
+
+		for (var i = 0; i < boites.length; i++) {
+		    boites[i].addEventListener('mouseenter', toggleBoutons, false);
+		    boites[i].addEventListener('mouseenter', changerTexte, false);
+		    boites[i].addEventListener('mouseleave', toggleBoutons, false);
+		}	
+		
+		container.addEventListener('mouseenter', toggleBande, false);
+		container.addEventListener('mouseleave', toggleBande, false);
 		</script>
 </body>
 </html>
