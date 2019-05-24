@@ -56,7 +56,6 @@
 	<div class="entete">
 		<div style="text-align: center">
 			<h1>Vos recommandations</h1>
-			<h2>Vous allez prendre un plaisir fou !</h2>
 			<div class="wrapper">
 
 				<div class="input-group">
@@ -79,10 +78,10 @@
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
 						
-						String like = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=Home";
-						String vu = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=Home";
-						String favoris = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=Home";
-						String dislike = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=Home";
+						String like = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=recommander&seuil=4";
+						String vu = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=recommander&seuil=4";
+						String favoris = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=recommander&seuil=4";
+						String dislike = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=recommander&seuil=4";
 				
 				%>
 
