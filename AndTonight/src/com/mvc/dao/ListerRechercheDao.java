@@ -54,10 +54,13 @@ public class ListerRechercheDao {
 
 			for(int id=0 ; id < listIdFilms.size(); id++){
 
-			
-				String nom = listFilms.get(id).toLowerCase();
-
-				if(nom.contains(recherche)){
+				
+				String nom = listFilms.get(id);
+				String nomlow = nom.toLowerCase();
+				
+				if(nomlow.contains(recherche)){
+						
+				
 					
 					listFilmsR.add(nom);
 					listIdFilmsR.add(id);
