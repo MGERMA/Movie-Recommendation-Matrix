@@ -18,42 +18,23 @@ public class ListerRechercheDao {
 
 
 	public void ListerFilmRecherche(String recherche, HttpSession session){
+		
+		// On met la recherche en minuscule
+		
+		recherche = recherche.toLowerCase();
+		
+		
+		
+		
+		CatalogueBean  complet = (CatalogueBean) session.getAttribute("film");
+		PochetteBean poch = (PochetteBean) session.getAttribute("pochette");
+		
+		ArrayList<String> listFilms = complet.getListeFilm();
+		ArrayList<Integer> listIdFilms = complet.getListeIdFilm();
+		ArrayList<String> listSynopsis = complet.getListeSynopsis();
+		ArrayList<String> listPochette = poch.getListePochette();
 
-
-		ArrayList<String> listFilms = new ArrayList<String>();
-		ArrayList<Integer> listIdFilms = new ArrayList<Integer>();
-		ArrayList<String> listSynopsis = new ArrayList<String>();			
-		ArrayList<String> listPochette = new ArrayList<String>();
-
-		Connection con = DBConnection.createConnection();
-		Statement stmt;
-		ResultSet res;
-
-
-		try {
-			stmt = con.createStatement();
-
-			res = stmt.executeQuery("SELECT * FROM films");
-			while(res.next()){;
-			listFilms.add(res.getString("titre"));
-			listIdFilms.add(res.getInt("id"));
-			listSynopsis.add(res.getString("synopsis"));
-			}
-
-
-			res = stmt.executeQuery("SELECT * FROM pochette");
-			while(res.next()){
-				listPochette.add(res.getString("nom_fichier"));
-			}
-			
-			stmt.close();
-			con.close();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
 
 		CatalogueBean catalogueBean = new CatalogueBean();
 		PochetteBean pochetteBean = new PochetteBean();
@@ -71,13 +52,13 @@ public class ListerRechercheDao {
 		if (recherche.length()>0){
 
 
-			for(int i : listIdFilms){
+			for(int id=0 ; id < listIdFilms.size(); id++){
 
-				int id = i-1;
-				String nom = listFilms.get(id);
+			
+				String nom = listFilms.get(id).toLowerCase();
 
 				if(nom.contains(recherche)){
-
+					
 					listFilmsR.add(nom);
 					listIdFilmsR.add(id);
 					listSynopsisR.add(listSynopsis.get(id));
@@ -108,4 +89,5 @@ public class ListerRechercheDao {
 
 
 	}
+		
 }

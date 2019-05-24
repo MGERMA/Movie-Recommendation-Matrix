@@ -20,6 +20,7 @@ import com.mvc.bean.PochetteBean;
 import com.mvc.bean.UserBean;
 import com.mvc.dao.ListerFilmDao;
 import com.mvc.dao.ListerFilmNonVuDao;
+import com.mvc.dao.ListerMesFilmsDao;
 import com.mvc.dao.ListerRechercheDao;
 import com.mvc.dao.ListerRecommandationDao;
 import com.mvc.util.DBConnection;
@@ -33,6 +34,7 @@ public class ChargementServlet extends HttpServlet {
 		String op = request.getParameter("op");
 		String recherche_home = request.getParameter("recherche_home");
 		String recherche_lister = request.getParameter("recherche_lister");
+		String recherche_mesfilms = request.getParameter("recherche_mesfilms");
 		String seuil = request.getParameter("seuil");
 		String recherche = null;
 		String redirect = null;
@@ -50,13 +52,18 @@ public class ChargementServlet extends HttpServlet {
 		}
 				
 		if (recherche_home!=null){
-			op="rechercher";
+			op="rechercher_home";
 			recherche = recherche_home;
 			redirect = "Home";
 		} else if (recherche_lister!=null){
-			op="rechercher";
+			op="rechercher_lister";
 			recherche = recherche_lister;
 			redirect = "lister";
+			
+		} else if (recherche_mesfilms!=null){
+			op="rechercher_mesfilms";
+			recherche = recherche_mesfilms;
+			redirect = "mesfilms";
 		}
 
 
@@ -80,10 +87,34 @@ public class ChargementServlet extends HttpServlet {
 		}
 
 
-		if (op.equals("rechercher")){
+		if (op.equals("rechercher_home")){
+			
+			
+			ListerFilmNonVuDao liste = new ListerFilmNonVuDao();
+			liste.ListerFilmNonVu(session);
+				
+			ListerRechercheDao lister = new ListerRechercheDao();
+			lister.ListerFilmRecherche(recherche, session);
+			request.getRequestDispatcher("/"+redirect+".jsp").forward(request, response);
 
-			ListerRechercheDao liste = new ListerRechercheDao();
-			liste.ListerFilmRecherche(recherche, session);
+		}
+		
+		if (op.equals("rechercher_lister")){
+			ListerFilmDao liste = new ListerFilmDao();
+			liste.ListerFilm(session);
+			
+			ListerRechercheDao lister = new ListerRechercheDao();
+			lister.ListerFilmRecherche(recherche, session);
+			request.getRequestDispatcher("/"+redirect+".jsp").forward(request, response);
+
+		}
+		
+		if (op.equals("rechercher_mesfilms")){
+			ListerMesFilmsDao liste = new ListerMesFilmsDao();
+			liste.ListerMesFilms(session);
+			
+			ListerRechercheDao lister = new ListerRechercheDao();
+			lister.ListerFilmRecherche(recherche, session);
 			request.getRequestDispatcher("/"+redirect+".jsp").forward(request, response);
 
 		}
@@ -96,6 +127,15 @@ public class ChargementServlet extends HttpServlet {
 			ListerRecommandationDao liste = new ListerRecommandationDao();
 			liste.ListerRecommandation(session,m.getMesRecommendations(),m.getMesNotes());
 			request.getRequestDispatcher("/recommandation.jsp").forward(request, response);
+
+		}
+		
+		
+		if (op.equals("mesfilms")){
+
+			ListerMesFilmsDao liste = new ListerMesFilmsDao();
+			liste.ListerMesFilms(session);
+			request.getRequestDispatcher("/mesfilms.jsp").forward(request, response);
 
 		}
 
