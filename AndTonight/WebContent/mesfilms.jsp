@@ -13,7 +13,7 @@
 	color="#111">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-<title>Catalogue</title>
+<title>MesFilms</title>
 <style>
 </style>
 <link rel="stylesheet"
@@ -54,7 +54,7 @@
 
 	<div class="entete">
 		<div style="text-align: center">
-			<h1>Notre Catalogue</h1>
+			<h1>Vos films</h1>
 			<div class="wrapper">
 
 				<div class="input-group">
@@ -62,7 +62,7 @@
 						method="get">
 						<input class="search" type="text"
 							placeholder="Rechercher un film en particulier"
-							name="recherche_lister" style="")><span class="bar"></span>
+							name="recherche_mesfilms" style="")><span class="bar"></span>
 					</form>
 				</div>
 			</div>
@@ -77,7 +77,10 @@
 					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
-
+						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2"
+								+ "&redirect=mesfilms";
+						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i)
+								+ "&note=1" + "&redirect=mesfilms";
 				%>
 
 
@@ -98,6 +101,16 @@
 						<img id="poch<%=i%>" src=<%=s%>>
 					</div>
 
+					<div class="bande_like_gauche">
+						<a href="<%=dislike%>" class="boutons_dislike"> <span
+							class="material-icons"> thumb_down_alt </span>
+						</a>
+					</div>
+					<div class="bande_like_droit">
+						<a href="<%=like%>" class="boutons_like"> <span
+							class="material-icons"> thumb_up_alt </span>
+						</a>
+					</div>
 				</div>
 
 				<%

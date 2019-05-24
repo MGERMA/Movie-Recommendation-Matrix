@@ -118,8 +118,11 @@
 				%>
 			</div>
 
-
-
+			
+			<div>
+				<a href="ChargementServlet?op=mesfilms"> Mes films vus
+					 </a>
+			</div>
 			<div>
 				<a href="AjoutFilm.jsp"> Ajouter un film dans la base de données</a>
 			</div>
