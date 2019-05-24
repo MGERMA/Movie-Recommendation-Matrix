@@ -62,8 +62,7 @@
 				<div class="input-group">
 					<form action="/AndTonight/ChargementServlet?op=recommander"
 						method="get">
-						<input class="search" type="text"
-							placeholder="Entrer le seuil"
+						<input class="search" type="text" placeholder="Entrer le seuil"
 							name="seuil" style="")><span class="bar"></span>
 					</form>
 				</div>
@@ -79,6 +78,11 @@
 					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
+						
+						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2"
+								+ "&redirect=recommander";
+						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i)
+								+ "&note=1" + "&redirect=recommander";
 				
 				%>
 
@@ -95,10 +99,22 @@
 					</p>
 				</div>
 
+				<div class="bande_like_gauche">
+					<a href="<%=dislike%>" class="boutons_dislike"> <span
+						class="material-icons"> thumb_down_alt </span>
+					</a>
+				</div>
+				<div class="bande_like_droit">
+					<a href="<%=like%>" class="boutons_like"> <span
+						class="material-icons"> thumb_up_alt </span>
+					</a>
+				</div>
+
+
 				<div class="boite_pochette">
 					<div class="pochette">
 						<img id="poch<%=i%>" src=<%=s%>>
-						
+
 					</div>
 				</div>
 				<%=String.valueOf(notes.get(i))%>

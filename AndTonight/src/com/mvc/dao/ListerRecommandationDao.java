@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,11 +29,11 @@ public class ListerRecommandationDao {
 		Connection con = DBConnection.createConnection();
 		Statement stmt;
 		ResultSet res;
-		
+
 		UserBean user = (UserBean) session.getAttribute("user");
-		
+
 		try {
-			 stmt = con.createStatement();
+			stmt = con.createStatement();
 
 			res = stmt.executeQuery("SELECT * FROM films");
 			while(res.next()){;
@@ -65,35 +66,55 @@ public class ListerRecommandationDao {
 		ArrayList<Float> notes_res = new ArrayList<Float>();
 
 		try {
-			
+
 			stmt = con.createStatement();
 			res = stmt.executeQuery("SELECT * from FilmsVu WHERE id_user="+String.valueOf(user.getIduser()));
 			res.next();
 
-	
+
 			int ind =0;
 			for (int k : recoms){		
-				
+
 				if (res.getInt(k+1) == 0){
-									
-						
+
 					listFilms_NV.add(listFilms.get(k-1));
 					listIdFilms_NV.add(listIdFilms.get(k-1));
 					listSynopsis_NV.add(listSynopsis.get(k-1));
 					listPochette_NV.add(listPochette.get(k-1));	
 					notes_res.add(notes.get(ind));
 				}	
-			ind ++;
+				ind ++;
 			}
-			
-		
+
+
 			stmt.close();
 			con.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
+			
+
+		// reccuperation de la permutation
+		ArrayList<Integer> perm = Permutation(notes_res);
+		
+		System.out.println(perm);
+		
+		// tri des notes 
+		
+		listFilms_NV = Tri(listFilms_NV,perm);
+		listIdFilms_NV = Tri(listIdFilms_NV,perm);
+		listSynopsis_NV = Tri(listSynopsis_NV,perm);
+		listPochette_NV = Tri(listPochette_NV,perm);
+		notes_res = Tri(notes_res,perm);
+		
+		
+		
+		// Definition des nouveaux catalogue
 		
 		CatalogueBean catalogueBean = new CatalogueBean();
 		catalogueBean.setListeFilm(listFilms_NV);
@@ -102,12 +123,62 @@ public class ListerRecommandationDao {
 
 		PochetteBean pochetteBean = new PochetteBean();
 		pochetteBean.setListePochette(listPochette_NV);
-
 		
+		
+
 		session.setAttribute( "film", catalogueBean );
 		session.setAttribute( "pochette", pochetteBean );
-		session.setAttribute( "notes", notes_res );
+		session.setAttribute( "notes", normaliserNotes(notes_res));
 
 
 	}
+
+
+	//Renvoie la liste des permutation pour trier les listes dans l'ordre des notes
+	public ArrayList<Integer> Permutation(ArrayList<Float> notes){
+		
+		ArrayList<Integer> permutation = new ArrayList<Integer>();
+		ArrayList<Float> cpnotes = (ArrayList<Float>) notes.clone();
+		float maxtlb = 0;
+		int i = 0;
+		int taille = cpnotes.size();
+		
+		while (taille > 0){
+			maxtlb = Collections.max(cpnotes);
+			i = cpnotes.indexOf(maxtlb);
+			permutation.add(i);
+			cpnotes.remove(i);
+			cpnotes.add(i,(float) -15 );
+			taille --;
+		}
+		
+		return permutation;
+	}
+
+	//Renvoie la liste triM-CM-)e d'apres la liste de permutations
+	public static <T> ArrayList<T> Tri(ArrayList<T> liste, ArrayList<Integer> permutation ){
+		ArrayList<T> temp = new ArrayList<T>();
+
+		for (int pos : permutation){		
+			temp.add(liste.get(pos));
+		}
+
+		return temp;
+	}
+	
+	
+	public ArrayList<Float> normaliserNotes(ArrayList<Float> notes){
+		
+		ArrayList<Float> res = new ArrayList<Float>();
+		float max =1;
+		if (notes.size() >0){
+			max = notes.get(0);
+		}
+		for (float note : notes){
+			res.add((note*100)/max);
+		}		
+		return res;	
+	}
+
+
 }

@@ -45,9 +45,19 @@ public class ChargementServlet extends HttpServlet {
 
 
 		if (seuil != null){
-			if(seuil.equals("")){
-				seuil = "0";
+			try {
+				
+				Float.parseFloat(seuil);
+				
+				if (seuil.equals("")){
+					
+					seuil = "-5" ;
+				}				
+				
+			} catch (NumberFormatException e){
+				seuil = "-5";
 			}
+		
 			op="recommander";
 		}
 				
