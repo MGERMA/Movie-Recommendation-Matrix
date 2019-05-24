@@ -25,32 +25,32 @@ public class Recommandation{
 		int n = 0;
 		int m = 0;
 		float[][] matrix = null; 
-		
+
 		try
 		{
 
 			// ----------- 1 ------------- On récupere la DataBase et on la stocke dans la matice matrix
 			Connection con = DBConnection.createConnection();
 			Statement statement = con.createStatement();
-			
-			
+
+
 			// Calcul de la taille de la table
 			String queryTaille = "SELECT COUNT(*) FROM Notes";
 			ResultSet rs = statement.executeQuery(queryTaille);
 			rs.next();
 			n = rs.getInt(1);
-			
+
 			queryTaille = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Notes'";
 			rs = statement.executeQuery(queryTaille);
 			rs.next();
 			m = rs.getInt(1)-1;
-			
-			
-					
+
+
+
 			matrix = new float[n][m];		
 			String query = "SELECT * FROM Notes";
 			rs = statement.executeQuery(query);
-			
+
 			int j = 0;
 			while (rs.next())
 			{			
@@ -63,8 +63,12 @@ public class Recommandation{
 					} else if (note == (byte) 1 ){
 						matrix[j][i-1] = (float) 0 ;
 					} else if (note == (byte) 2 ){
+						matrix[j][i-1] = (float) 3 ;
+					} else if (note == (byte) 3 ){
+						matrix[j][i-1] = (float) 6;
+					} else if (note == (byte) 4 ){
 						matrix[j][i-1] = (float) 10 ;
-					}			
+					}		
 				}	
 
 
@@ -103,8 +107,8 @@ public class Recommandation{
 
 			Float noteUser = matrixP[id_user-1][i-1];
 
-		
-			
+
+
 			if (noteUser > seuil){
 				recom.add(i);
 				note.add(noteUser);				
