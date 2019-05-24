@@ -182,7 +182,7 @@ body {
 
 .container_pochettes .boite_pochette {
 	position: relative;
-	z-index:2;
+	z-index:150;
 	width: 130px;
 	height: 200px;
 	background: #ff0;
@@ -213,6 +213,22 @@ body {
 	left: -29px;
 	opacity: 0;
 }
+.container_pochettes .boite_pochette .bande_like_droit .boutons_favoris {
+	top: 3px;
+	position: absolute;
+	z-index: 30;
+	left: -29px;
+	opacity: 0;
+}
+
+.container_pochettes .boite_pochette .bande_like_droit .boutons_check{
+	top: 170px;
+	position: absolute;
+	z-index: 30;
+	left: -29px;
+	opacity: 0;
+}
+
 
 .container_pochettes .boite_pochette .bande_like_gauche .boutons_dislike {
 	top: 85px;
@@ -268,6 +284,21 @@ body {
 
 	transition: right 0.25s ease-in-out, opacity 0.25s ease-in-out;
 }
+.container_pochettes .boite_pochette .bande_like_droit--ouverte .boutons_favoris--ouverts {
+	top: 3px;
+	opacity: 0.5; 
+	position: absolute;
+
+	transition: right 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+.container_pochettes .boite_pochette .bande_like_droit--ouverte .boutons_check--ouverts {
+	top: 170px;
+	opacity: 0.5; 
+	position: absolute;
+
+	transition: right 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
 
 .container_pochettes .boite_pochette .bande_like_gauche--ouverte .boutons_dislike--ouverts {
 	z-index: 20;
@@ -281,6 +312,14 @@ body {
 .container_pochettes .boite_pochette .bande_like_droit--ouverte .boutons_like--ouverts--select {
 	opacity: 1;
 }
+.container_pochettes .boite_pochette .bande_like_droit--ouverte .boutons_favoris--ouverts--select {
+	opacity: 1;
+}
+
+.container_pochettes .boite_pochette .bande_like_droit--ouverte .boutons_check--ouverts--select {
+	opacity: 1;
+}
+
 
 .container_pochettes .boite_pochette .bande_like_gauche--ouverte .boutons_dislike--ouverts--select {
 	opacity: 1;
