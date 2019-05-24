@@ -87,14 +87,14 @@
 				</div>
 			
 				<%
-					int iduser = userBean.getIduser();
+
 					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
-						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=lister.jsp";
-						String vu = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=lister.jsp";
-						String favoris = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=lister.jsp";
-						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=lister.jsp";
+						String like = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=mesfilms";
+						String vu = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=mesfilms";
+						String favoris = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=mesfilms";
+						String dislike = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=mesfilms";
 				%>
 
 

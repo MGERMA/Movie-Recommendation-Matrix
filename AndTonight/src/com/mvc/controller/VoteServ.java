@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mvc.bean.UserBean;
 import com.mvc.dao.VoteDao;
 
 @WebServlet("/VoteServ")
@@ -17,14 +20,15 @@ public class VoteServ extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userID = request.getParameter("id_user");
+		HttpSession session = request.getSession();
+		UserBean user = (UserBean) session.getAttribute("user");
 		String filmID = request.getParameter("id_film");
 		String note = request.getParameter("note");
 		String redirect = request.getParameter("redirect");
 		String validation = "votre avis a été pris en compte";
 		VoteDao Vote = new VoteDao(); 
 
-		Vote.VoteFilm(userID,filmID,note); 
+		Vote.VoteFilm(String.valueOf(user.getIduser()),filmID,note); 
 		request.setAttribute("validation", validation); 
 		request.getRequestDispatcher("/ChargementServlet?op="+redirect).forward(request, response);
 	}

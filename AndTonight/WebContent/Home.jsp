@@ -87,14 +87,14 @@
 					</p>
 				</div>
 				<%
-					int iduser = userBean.getIduser();
+
 					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
-						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=Home";
-						String vu = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=Home";
-						String favoris = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=Home";
-						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=Home";
+						String like = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=3" + "&redirect=Home";
+						String vu = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2" + "&redirect=Home";
+						String favoris = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=4" + "&redirect=Home";
+						String dislike = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=1" + "&redirect=Home";
 				%>
 
 
@@ -142,7 +142,7 @@
 					films </a>
 			</div>
 			<div>
-				<a href="ChargementServlet?op=recommander&seuil=5"> Mes recommandations
+				<a href="ChargementServlet?op=recommander&seuil=4"> Mes recommandations
 					 </a>
 			</div>
 		</form>

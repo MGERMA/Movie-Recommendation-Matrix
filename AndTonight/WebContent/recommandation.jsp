@@ -74,14 +74,14 @@
 		<form action="" accept-charset="UTF-8">
 			<div class="container_pochettes">
 				<%
-					int iduser = userBean.getIduser();
+
 					for (int i = 0; i < filmBean.getListeIdFilm().size(); i++) {
 
 						String s = "pochettes/" + pochetteBean.getListePochette().get(i);
 						
-						String like = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2"
+						String like = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i) + "&note=2"
 								+ "&redirect=recommander";
-						String dislike = "VoteServ?id_user=" + iduser + "&id_film=" + filmBean.getListeIdFilm().get(i)
+						String dislike = "VoteServ?id_film=" + filmBean.getListeIdFilm().get(i)
 								+ "&note=1" + "&redirect=recommander";
 				
 				%>
