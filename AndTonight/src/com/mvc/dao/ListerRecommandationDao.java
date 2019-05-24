@@ -62,6 +62,7 @@ public class ListerRecommandationDao {
 		ArrayList<Integer> listIdFilms_NV = new ArrayList<Integer>();
 		ArrayList<String> listSynopsis_NV = new ArrayList<String>();			
 		ArrayList<String> listPochette_NV = new ArrayList<String>();
+		ArrayList<Float> notes_res = new ArrayList<Float>();
 
 		try {
 			
@@ -70,17 +71,19 @@ public class ListerRecommandationDao {
 			res.next();
 
 	
-			
-		
-			for (int k : recoms){			
+			int ind =0;
+			for (int k : recoms){		
+				
 				if (res.getInt(k+1) == 0){
 									
-								
+						
 					listFilms_NV.add(listFilms.get(k-1));
 					listIdFilms_NV.add(listIdFilms.get(k-1));
 					listSynopsis_NV.add(listSynopsis.get(k-1));
-					listPochette_NV.add(listPochette.get(k-1));			
-				}						
+					listPochette_NV.add(listPochette.get(k-1));	
+					notes_res.add(notes.get(ind));
+				}	
+			ind ++;
 			}
 			
 		
@@ -103,7 +106,7 @@ public class ListerRecommandationDao {
 		
 		session.setAttribute( "film", catalogueBean );
 		session.setAttribute( "pochette", pochetteBean );
-		session.setAttribute( "notes", notes );
+		session.setAttribute( "notes", notes_res );
 
 
 	}

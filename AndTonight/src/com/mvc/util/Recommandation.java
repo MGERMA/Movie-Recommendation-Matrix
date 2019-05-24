@@ -103,7 +103,8 @@ public class Recommandation{
 
 			Float noteUser = matrixP[id_user-1][i-1];
 
-
+		
+			
 			if (noteUser > seuil){
 				recom.add(i);
 				note.add(noteUser);				
